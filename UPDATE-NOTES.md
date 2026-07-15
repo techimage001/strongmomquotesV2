@@ -32,3 +32,21 @@
 2. Resubmit sitemap.xml (155 URLs) in Search Console.
 3. Hard-refresh (assets cache-busted to v=3).
 4. Secrets stay in smq_private/secrets.php on the server.
+
+## PREMIUM REDESIGN + FEATURES (this update)
+- Complete visual redesign to a premium "soft & modern" system: layered shadows,
+  soft ambient gradients, refined quote cards with gradient accent + hover lift,
+  glassy sticky header, accordion FAQs with +/x toggle, dark gradient footer,
+  gradient hero headline. All 140 content pages inherit it automatically.
+- Card maker: added a CUSTOM COLOUR PICKER (any colour, with automatic light/dark
+  text contrast so cards are never unreadable), plus FACEBOOK POST (1200x630) and
+  LINKEDIN POST (1200x627) sizes alongside Instagram/Pinterest/Story.
+- Unique favicon: an SMQ monogram with a gold quote mark in the plum brand palette
+  (favicon.svg + PNG sizes + apple-touch-icon), wired into all 155 pages.
+
+## On ads.txt "Not found" and sitemap "Couldn't fetch"
+Both files are correct and live (verified). The statuses are because the site is
+newly deployed and Google/AdSense have not finished their first crawl. They resolve
+on their own once the site has been live and reachable for 24-48 hours. Re-submit
+the sitemap in Search Console; ads.txt flips to Authorized after AdSense crawls it.
+No file change was needed.

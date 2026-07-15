@@ -7,8 +7,6 @@
 <meta name="description" content="Turn any mom quote into a beautiful Pinterest, Instagram or story card. Currently free: pick a background, a font and a size, then download your card.">
 <link rel="canonical" href="https://strongmomquotes.com/app.html">
 <meta name="theme-color" content="#A64D63">
-<link rel="icon" href="/icon-192.png">
-<link rel="apple-touch-icon" href="/icon-192.png">
 <link rel="manifest" href="/manifest.json">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -62,6 +60,9 @@ textarea{min-height:88px;resize:vertical}
 .hp-field{position:absolute;left:-9999px;top:-9999px}
 .btn.small{padding:7px 15px;font-size:.85rem}
 </style>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 </head>
 <body>
 <header class="site"><div class="wrap">
@@ -95,7 +96,7 @@ textarea{min-height:88px;resize:vertical}
 <textarea id="qtext" maxlength="300">She carried the whole house on her shoulders and still made it feel light.</textarea></div>
 <div class="field"><label for="qby">Attribution</label>
 <input type="text" id="qby" maxlength="80" value="Strong Mom Quotes"></div>
-<div class="field"><label>Background</label><div class="swatches" id="bgs"></div></div>
+<div class="field"><label>Background</label><div class="swatches" id="bgs"></div><div style="margin-top:10px;display:flex;align-items:center;gap:10px"><label for="customBg" style="margin:0;text-transform:none;letter-spacing:0;font-size:.82rem;color:var(--muted);cursor:pointer">Or pick any colour:</label><input type="color" id="customBg" value="#B04B66" style="width:44px;height:36px;border:1.5px solid var(--line);border-radius:8px;background:#fff;cursor:pointer;padding:2px"></div></div>
 <div class="field"><label>Font style</label><div class="segs" id="fonts">
 <button aria-pressed="true" data-font="serif">Elegant serif</button>
 <button aria-pressed="false" data-font="clean">Clean modern</button>
@@ -105,6 +106,8 @@ textarea{min-height:88px;resize:vertical}
 <button aria-pressed="true" data-size="square">Instagram square</button>
 <button aria-pressed="false" data-size="pin">Pinterest pin</button>
 <button aria-pressed="false" data-size="story">Story</button>
+<button aria-pressed="false" data-size="facebook">Facebook post</button>
+<button aria-pressed="false" data-size="linkedin">LinkedIn post</button>
 </div></div>
 <button class="btn" id="downloadBtn">Download this card</button>
 <button class="btn ghost" id="favBtn" style="margin-left:8px">&hearts; Save to favorites</button>
@@ -308,13 +311,28 @@ BGS.forEach(function(bg,i){
   b.addEventListener('click',function(){state.bg=i;bgsEl.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed','false');});b.setAttribute('aria-pressed','true');draw();});
   bgsEl.appendChild(b);
 });
+// Custom colour: build a background from any chosen colour, auto-pick readable text
+function hexToRgb(x){x=x.replace('#','');return [parseInt(x.slice(0,2),16),parseInt(x.slice(2,4),16),parseInt(x.slice(4,6),16)];}
+function luminance(r,g,b){var a=[r,g,b].map(function(v){v/=255;return v<=0.03928?v/12.92:Math.pow((v+0.055)/1.055,2.4);});return 0.2126*a[0]+0.7152*a[1]+0.0722*a[2];}
+function shade(hex,amt){var c=hexToRgb(hex);return '#'+c.map(function(v){var n=Math.round(v+amt);return Math.max(0,Math.min(255,n)).toString(16).padStart(2,'0');}).join('');}
+var customBgEl=document.getElementById('customBg');
+if(customBgEl){customBgEl.addEventListener('input',function(){
+  var hex=customBgEl.value;var rgb=hexToRgb(hex);var lum=luminance(rgb[0],rgb[1],rgb[2]);
+  var light=lum>0.45;
+  var custom={name:'Custom',a:shade(hex,18),b:shade(hex,-18),ink:light?'#2E2733':'#FFFDFB',acc:light?'#8E3A52':'#EBD9B4'};
+  BGS.push(custom);state.bg=BGS.length-1;
+  bgsEl.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed','false');});
+  draw();
+  // keep only one trailing custom entry so the array does not grow unbounded
+  if(BGS.length>9 && BGS[BGS.length-2].name==='Custom'){BGS.splice(BGS.length-2,1);state.bg=BGS.length-1;}
+});}
 document.getElementById('fonts').addEventListener('click',function(e){
   var b=e.target.closest('button');if(!b)return;
   state.font=b.dataset.font;
   this.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed','false');});
   b.setAttribute('aria-pressed','true');draw();
 });
-var SIZES={square:{w:1080,h:1080},pin:{w:1000,h:1500},story:{w:1080,h:1920}};
+var SIZES={square:{w:1080,h:1080},pin:{w:1000,h:1500},story:{w:1080,h:1920},facebook:{w:1200,h:630},linkedin:{w:1200,h:627}};
 document.getElementById('sizes').addEventListener('click',function(e){
   var b=e.target.closest('button');if(!b)return;
   state.size=b.dataset.size;
