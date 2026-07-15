@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /leads.php
+Disallow: /subscribe.php
+Disallow: /verify.php
+Sitemap: https://strongmomquotes.com/sitemap.xml
