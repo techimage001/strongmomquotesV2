@@ -1,0 +1,601 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Free Quote Card Maker: Strong Mom Quotes</title>
+<meta name="description" content="Turn any mom quote into a beautiful Pinterest, Instagram or story card. Currently free: pick a background, a font and a size, then download your card.">
+<link rel="canonical" href="https://strongmomquotes.com/app.html">
+<meta name="theme-color" content="#A64D63">
+<link rel="icon" href="/icon-192.png">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,500&family=Karla:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css?v=3">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4138594802747479" crossorigin="anonymous"></script>
+<style>
+.tabs{display:flex;gap:6px;padding:10px 0;flex-wrap:wrap}
+.tabs button{font-family:inherit;font-weight:800;font-size:.9rem;padding:9px 16px;border-radius:999px;border:2px solid var(--line);background:#fff;color:var(--ink);cursor:pointer;transition:.16s}
+.tabs button[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 8px 18px -10px rgba(166,77,99,.7)}
+.panel{display:none}
+.panel.active{display:block}
+.maker{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;margin-top:18px}
+@media(max-width:820px){.maker{grid-template-columns:1fr}}
+.stage{background:var(--wash);border:1px solid var(--line);border-radius:var(--radius);padding:18px;text-align:center;box-shadow:inset 0 2px 14px rgba(55,48,63,.06)}
+canvas#cv{max-width:100%;height:auto;border-radius:12px;box-shadow:0 3px 8px rgba(55,48,63,.16), 0 26px 50px -22px rgba(55,48,63,.7)}
+.field{margin-bottom:16px}
+.field label{display:block;font-weight:800;font-size:.85rem;margin-bottom:6px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+textarea,input[type=text],input[type=email]{width:100%;font-family:inherit;font-size:1rem;padding:11px 13px;border:1.5px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
+textarea{min-height:88px;resize:vertical}
+.swatches{display:flex;gap:9px;flex-wrap:wrap}
+.swatches button{width:44px;height:44px;border-radius:12px;border:3px solid transparent;cursor:pointer;box-shadow:0 6px 16px -8px rgba(55,48,63,.7);transition:transform .15s}
+.swatches button:hover{transform:translateY(-2px)}
+.swatches button[aria-pressed="true"]{border-color:var(--gold)}
+.segs{display:flex;gap:8px;flex-wrap:wrap}
+.segs button{font-family:inherit;font-weight:700;font-size:.88rem;padding:9px 14px;border-radius:999px;border:2px solid var(--line);background:#fff;color:var(--ink);cursor:pointer;transition:.16s}
+.segs button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.qrow{background:#fff;border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:var(--radius);padding:16px;margin-bottom:12px;box-shadow:0 1px 2px rgba(55,48,63,.05), 0 12px 28px -24px rgba(55,48,63,.6)}
+.qrow blockquote{font-family:'Fraunces',Georgia,serif;font-size:1.08rem;line-height:1.4}
+.qrow .by{color:var(--muted);font-size:.82rem;margin-top:6px}
+.qrow .row-tools{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}
+.qrow .row-tools button{font-family:inherit;font-size:.82rem;font-weight:700;padding:6px 13px;border-radius:999px;border:2px solid var(--accent);background:transparent;color:var(--accent);cursor:pointer}
+.qrow .row-tools button:hover{background:var(--accent);color:#fff}
+.daily-card{background:linear-gradient(160deg,#4A3A50,#37303F);color:#FBF3EE;border-radius:20px;padding:38px 26px;text-align:center;max-width:560px;margin:0 auto 18px;position:relative;box-shadow:0 30px 70px -34px rgba(55,48,63,.75), inset 0 1px 0 rgba(255,255,255,.07)}
+.daily-card::after{content:'';position:absolute;inset:0;border-radius:20px;pointer-events:none;background:radial-gradient(500px 190px at 80% -16%, rgba(201,150,46,.2), transparent 66%)}
+.daily-card .qm{font-family:'Fraunces',Georgia,serif;font-size:3.2rem;line-height:.6;color:var(--gold);display:block;margin-bottom:6px}
+.daily-card blockquote{font-family:'Fraunces',Georgia,serif;font-size:1.3rem;line-height:1.35}
+.daily-card .by{margin-top:12px;font-size:.8rem;letter-spacing:.08em;color:#D9C7CE}
+.settings-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:22px;margin-bottom:16px;box-shadow:0 1px 2px rgba(55,48,63,.05), 0 14px 30px -26px rgba(55,48,63,.6)}
+.settings-card h3{margin-bottom:8px}
+.settings-card ul{margin:8px 0 0 18px}
+.modal{position:fixed;inset:0;background:rgba(55,48,63,.6);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;z-index:100;padding:16px}
+.modal.open{display:flex}
+.modal .box{background:var(--paper);border-radius:20px;max-width:460px;width:100%;padding:30px;text-align:center}
+.modal h2{font-size:1.5rem;margin-bottom:8px}
+.modal .bigfree{font-weight:800;font-size:1.02rem;margin:12px 0}
+.modal .bigfree strong{color:var(--accent)}
+.modal .consent{font-size:.78rem;color:var(--muted);margin-top:12px;line-height:1.45}
+.modal .err{color:#A6342B;font-weight:700;font-size:.9rem;margin-top:10px;display:none}
+.modal .okmsg{color:#2E6B3C;font-weight:700;font-size:.95rem;margin-top:10px;display:none}
+.hp-field{position:absolute;left:-9999px;top:-9999px}
+.btn.small{padding:7px 15px;font-size:.85rem}
+</style>
+</head>
+<body>
+<header class="site"><div class="wrap">
+<nav class="nav" aria-label="Main">
+<a class="logo" href="/">Strong<em>Mom</em>Quotes</a>
+<span class="spacer"></span>
+<a class="link" href="/#free">All Free Features</a>
+<a class="link hidesm" href="/#faq">FAQ</a>
+<a class="link hidesm" href="/">Home</a>
+<span class="acct" id="acct"></span>
+</nav>
+<div class="tabs" role="tablist" aria-label="App sections">
+<button role="tab" aria-selected="true" data-tab="maker">Card Maker</button>
+<button role="tab" aria-selected="false" data-tab="daily">Today's Quote</button>
+<button role="tab" aria-selected="false" data-tab="favorites">Favorites</button>
+<button role="tab" aria-selected="false" data-tab="mine">My Quotes</button>
+<button role="tab" aria-selected="false" data-tab="settings">Settings</button>
+</div>
+</div></header>
+
+<main><div class="wrap">
+
+<section class="panel active" id="panel-maker" role="tabpanel">
+<div class="maker">
+<div class="stage">
+<canvas id="cv" width="1080" height="1080" aria-label="Quote card preview"></canvas>
+<p class="note">Live preview. Downloads are full resolution.</p>
+</div>
+<div>
+<div class="field"><label for="qtext">Quote</label>
+<textarea id="qtext" maxlength="300">She carried the whole house on her shoulders and still made it feel light.</textarea></div>
+<div class="field"><label for="qby">Attribution</label>
+<input type="text" id="qby" maxlength="80" value="Strong Mom Quotes"></div>
+<div class="field"><label>Background</label><div class="swatches" id="bgs"></div></div>
+<div class="field"><label>Font style</label><div class="segs" id="fonts">
+<button aria-pressed="true" data-font="serif">Elegant serif</button>
+<button aria-pressed="false" data-font="clean">Clean modern</button>
+<button aria-pressed="false" data-font="italic">Soft italic</button>
+</div></div>
+<div class="field"><label>Size</label><div class="segs" id="sizes">
+<button aria-pressed="true" data-size="square">Instagram square</button>
+<button aria-pressed="false" data-size="pin">Pinterest pin</button>
+<button aria-pressed="false" data-size="story">Story</button>
+</div></div>
+<button class="btn" id="downloadBtn">Download this card</button>
+<button class="btn ghost" id="favBtn" style="margin-left:8px">&hearts; Save to favorites</button>
+<p class="note" id="usesNote"></p>
+</div>
+</div>
+<div class="adslot">
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4138594802747479" data-ad-slot="0000000000" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+</div>
+<section class="popular">
+<h2>Need a quote to start with?</h2>
+<p class="note" style="margin-bottom:10px">Pick a collection, tap Make this a card on any quote, and it lands here ready to style.</p>
+<div class="chips">
+<a href="/strong-mom-quotes.html">Strong Mom Quotes</a>
+<a href="/tired-mom-quotes.html">Tired Mom Quotes</a>
+<a href="/funny-mom-quotes.html">Funny Mom Quotes</a>
+<a href="/single-mom-quotes.html">Single Mom Quotes</a>
+<a href="/affirmations-for-moms.html">Affirmations for Moms</a>
+<a href="/mom-quotes-from-daughter.html">Mom Quotes from Daughter</a>
+<a href="/new-mom-quotes.html">New Mom Quotes</a>
+<a href="/working-mom-affirmations.html">Working Mom Affirmations</a>
+</div>
+</section>
+</section>
+
+<section class="panel" id="panel-daily" role="tabpanel">
+<div class="daily-card">
+<span class="qm">&ldquo;</span>
+<blockquote id="dailyText"></blockquote>
+<p class="by" id="dailyBy"></p>
+</div>
+<div class="center">
+<button class="btn" id="dailyMake">Make this a card</button>
+<button class="btn ghost" id="dailyFav">&hearts; Save</button>
+<button class="btn ghost" id="dailyShuffle">Show me another</button>
+<p class="note" style="margin-top:12px">A fresh quote is ready here every day. Like every web app, it rests while fully closed, so today's quote is waiting whenever you open this page.</p>
+<p class="note" id="dailySource" style="margin-top:8px"></p>
+</div>
+</section>
+
+<section class="panel" id="panel-favorites" role="tabpanel">
+<h2 style="margin-bottom:14px">Your favorites</h2>
+<div id="favList"></div>
+<p class="note" id="favEmpty">No favorites yet. Tap the heart on any quote to keep it here, or browse <a href="/strong-mom-quotes.html">strong mom quotes</a> and <a href="/encouraging-quotes-for-moms.html">encouraging quotes for moms</a> to find some. Favorites are saved on this device; use Backup in Settings before switching phones.</p>
+</section>
+
+<section class="panel" id="panel-mine" role="tabpanel">
+<h2 style="margin-bottom:14px">My quotes</h2>
+<div class="field"><label for="mineText">Write your own quote</label>
+<textarea id="mineText" maxlength="300" placeholder="Your own words, for your own card"></textarea></div>
+<button class="btn" id="mineAdd">Save my quote</button>
+<div id="mineList" style="margin-top:20px"></div>
+</section>
+
+<section class="panel" id="panel-settings" role="tabpanel">
+<h2 style="margin-bottom:14px">Settings</h2>
+<div class="settings-card">
+<h3>Backup and restore</h3>
+<p>Your favorites and your own quotes live on this device, in this browser. Download a backup before switching phones or clearing your browser, then restore it anywhere.</p>
+<p style="margin-top:12px">
+<button class="btn small" id="backupBtn">Download backup</button>
+<label class="btn small ghost" style="cursor:pointer">Restore backup<input type="file" id="restoreFile" accept="application/json" style="display:none"></label>
+</p>
+</div>
+<div class="settings-card">
+<h3>Why Strong Mom Quotes</h3>
+<p>Everything typical quote apps charge for is currently free here.</p>
+<ul>
+<li><a href="/#free">All Free Features: the full comparison</a></li>
+<li><a href="/#how">How it works</a></li>
+<li><a href="/#faq">FAQ</a></li>
+<li><a href="/#about">About the quotes</a></li>
+<li><a href="/contact.html">Contact us</a></li>
+</ul>
+</div>
+<div class="settings-card">
+<h3>Your account</h3>
+<p id="acctState">You have not signed in on this device yet.</p>
+<p class="note">Signing up is free: one email, one click on the link we send, and the card maker unlocks. Using a new phone? Tap Sign in at the top and enter the same email.</p>
+</div>
+<div class="settings-card">
+<h3>Your privacy, plainly</h3>
+<p>Nothing you make or save in this app is sent to our servers. The only thing we ever store is the email address you confirm at signup. Full details in the <a href="/privacy.html">privacy policy</a> and <a href="/terms.html">terms of use</a>.</p>
+</div>
+</section>
+
+</div></main>
+
+<div class="modal" id="gateModal" role="dialog" aria-modal="true" aria-labelledby="gateTitle">
+<div class="box">
+<span class="crest" aria-hidden="true">&#10022;</span>
+<h2 id="gateTitle">Keep making free cards</h2>
+<p id="gateSub">You have used your three free downloads. Confirm your email to keep going.</p>
+<ul class="perks" id="gatePerks">
+<li>Unlimited quote cards</li>
+<li>Every background and font</li>
+<li>Pinterest, Instagram and story sizes</li>
+<li>Favorites and your own quotes</li>
+</ul>
+<p class="bigfree"><strong>100% FREE right now. No payment, no card details needed. Signing up costs nothing.</strong></p>
+<form id="gateForm">
+<div class="hp-field" aria-hidden="true"><label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+<div class="field"><input type="email" id="gateEmail" placeholder="you@example.com" required autocomplete="email" aria-label="Email address"></div>
+<button class="btn" type="submit" id="gateSubmit">Send my free unlock link</button>
+<p class="err" id="gateErr"></p>
+<p class="okmsg" id="gateOk"></p>
+<p class="gate-alt" id="gateAlt">Already signed up? <button type="button" id="toSignin" style="background:none;border:0;color:var(--accent);font-weight:800;cursor:pointer;font-family:inherit;text-decoration:underline">Enter the same email to unlock this device.</button></p>
+<p class="consent">We send one confirmation link, then occasional mom quote tips and offers by email. Unsubscribe anytime. See our <a href="/privacy.html">privacy policy</a>. Confirming keeps the card maker unlocked on this device.</p>
+</form>
+</div>
+</div>
+
+<footer class="mega"><div class="wrap">
+<div class="cols">
+<div><h3>Quote categories</h3><ul>
+<li><a href="/strong-mom-quotes.html">Strong Mom Quotes</a></li>
+<li><a href="/short-mom-quotes.html">Short Mom Quotes</a></li>
+<li><a href="/funny-mom-quotes.html">Funny Mom Quotes</a></li>
+<li><a href="/single-mom-quotes.html">Single Mom Quotes</a></li>
+<li><a href="/working-mom-quotes.html">Working Mom Quotes</a></li>
+<li><a href="/new-mom-quotes.html">New Mom Quotes</a></li>
+<li><a href="/tired-mom-quotes.html">Tired Mom Quotes</a></li>
+<li><a href="/affirmations-for-moms.html">Affirmations for Moms</a></li>
+</ul></div>
+<div><h3>Why Strong Mom Quotes</h3><ul>
+<li><a href="/#free">All Free Features</a></li>
+<li><a href="/#how">How it works</a></li>
+<li><a href="/#faq">FAQ</a></li>
+<li><a href="/#about">About the quotes</a></li>
+</ul></div>
+<div><h3>Site</h3><ul>
+<li><a href="/">Home</a></li>
+<li><a href="/contact.html">Contact us</a></li>
+<li><a href="/privacy.html">Privacy policy</a></li>
+<li><a href="/terms.html">Terms of use</a></li>
+</ul></div>
+</div>
+<p class="legal">&copy; 2026 Strong Mom Quotes. The tools on this site are currently free to use.</p>
+</div></footer>
+
+<script src="/site.js?v=3" defer></script>
+<script>
+'use strict';
+/*POOL_START*/var QUOTE_POOL=[{"t":"She carried the whole house on her shoulders and still made it feel light.","b":"Strong Mom Quotes","c":"Strong Mom Quotes","s":"strong-mom-quotes"},{"t":"A strong mom is not the one who never breaks. She is the one who rebuilds with the pieces.","b":"Strong Mom Quotes","c":"Strong Mom Quotes","s":"strong-mom-quotes"},{"t":"You are the calm your children borrow when the day is too loud.","b":"Strong Mom Quotes","c":"Strong Mom Quotes","s":"strong-mom-quotes"},{"t":"Her strength was never loud. It was the quiet decision, made daily, to keep going.","b":"Strong Mom Quotes","c":"Strong Mom Quotes","s":"strong-mom-quotes"},{"t":"Motherhood asked for everything she had. She answered with more than she knew she carried.","b":"Strong Mom Quotes","c":"Strong Mom Quotes","s":"strong-mom-quotes"},{"t":"A mother's courage is measured in ordinary mornings, not grand moments.","b":"Strong Mom Quotes","c":"Strong Mom Quotes","s":"strong-mom-quotes"},{"t":"She grows stronger in the exact places life tried to bend her.","b":"Strong Mom Quotes","c":"Strong Mom Quotes","s":"strong-mom-quotes"},{"t":"Behind every calm bedtime is a woman who fought a hundred small battles that day and won enough of them.","b":"Strong Mom Quotes","c":"Strong Mom Quotes","s":"strong-mom-quotes"},{"t":"Your children will not remember a perfect mother. They will remember a present one, and that takes more strength.","b":"Strong Mom Quotes","c":"Strong Mom Quotes","s":"strong-mom-quotes"},{"t":"She is soft with her children and unbreakable for them. Both at once. That is the job.","b":"Strong Mom Quotes","c":"Strong Mom Quotes","s":"strong-mom-quotes"},{"t":"Some heroes wear capes. Most reheat their coffee three times and keep going anyway.","b":"Strong Mom Quotes","c":"Strong Mom Quotes","s":"strong-mom-quotes"},{"t":"A mother's love is the only load that gets heavier and lighter at the same time.","b":"Strong Mom Quotes","c":"Strong Mom Quotes","s":"strong-mom-quotes"},{"t":"She did not find her strength in motherhood. Motherhood revealed the strength that was already there.","b":"Strong Mom Quotes","c":"Strong Mom Quotes","s":"strong-mom-quotes"},{"t":"On the days you feel weakest, look at what you carried anyway. That is strength.","b":"Strong Mom Quotes","c":"Strong Mom Quotes","s":"strong-mom-quotes"},{"t":"Little eyes are learning what strong looks like by watching you get back up.","b":"Strong Mom Quotes","c":"Strong Mom Quotes","s":"strong-mom-quotes"},{"t":"The bravest thing she does is done in secret: she believes in tomorrow on the nights she has nothing left.","b":"Strong Mom Quotes","c":"Strong Mom Quotes","s":"strong-mom-quotes"},{"t":"Mom: a title just above queen.","b":"Strong Mom Quotes","c":"Short Mom Quotes","s":"short-mom-quotes"},{"t":"Tired, but triumphant.","b":"Strong Mom Quotes","c":"Short Mom Quotes","s":"short-mom-quotes"},{"t":"She is the heartbeat of the house.","b":"Strong Mom Quotes","c":"Short Mom Quotes","s":"short-mom-quotes"},{"t":"Raising humans. Running on love.","b":"Strong Mom Quotes","c":"Short Mom Quotes","s":"short-mom-quotes"},{"t":"Strong is her default setting.","b":"Strong Mom Quotes","c":"Short Mom Quotes","s":"short-mom-quotes"},{"t":"Home is wherever mom is.","b":"Strong Mom Quotes","c":"Short Mom Quotes","s":"short-mom-quotes"},{"t":"Love, laundry, repeat.","b":"Strong Mom Quotes","c":"Short Mom Quotes","s":"short-mom-quotes"},{"t":"Small hands, whole heart.","b":"Strong Mom Quotes","c":"Short Mom Quotes","s":"short-mom-quotes"},{"t":"She makes ordinary days feel safe.","b":"Strong Mom Quotes","c":"Short Mom Quotes","s":"short-mom-quotes"},{"t":"One woman. A thousand quiet victories.","b":"Strong Mom Quotes","c":"Short Mom Quotes","s":"short-mom-quotes"},{"t":"Mothers turn houses into shelters.","b":"Strong Mom Quotes","c":"Short Mom Quotes","s":"short-mom-quotes"},{"t":"Fueled by coffee. Held together by love.","b":"Strong Mom Quotes","c":"Short Mom Quotes","s":"short-mom-quotes"},{"t":"Her lap was my first home.","b":"Strong Mom Quotes","c":"Short Mom Quotes","s":"short-mom-quotes"},{"t":"Still her baby. Just taller.","b":"Strong Mom Quotes","c":"Short Mom Quotes","s":"short-mom-quotes"},{"t":"Grace under pressure has a name: mom.","b":"Strong Mom Quotes","c":"Short Mom Quotes","s":"short-mom-quotes"},{"t":"I used to have functioning brain cells. Then I traded them for children.","b":"Strong Mom Quotes","c":"Funny Mom Quotes","s":"funny-mom-quotes"},{"t":"Motherhood: powered by cold coffee and questionable snacks found in the car.","b":"Strong Mom Quotes","c":"Funny Mom Quotes","s":"funny-mom-quotes"},{"t":"My children call it bedtime. I call it the nightly hostage negotiation.","b":"Strong Mom Quotes","c":"Funny Mom Quotes","s":"funny-mom-quotes"},{"t":"Silence is golden. Unless you have a toddler. Then silence is very, very suspicious.","b":"Strong Mom Quotes","c":"Funny Mom Quotes","s":"funny-mom-quotes"},{"t":"I run a small taxi service for people who never pay and always criticize the music.","b":"Strong Mom Quotes","c":"Funny Mom Quotes","s":"funny-mom-quotes"},{"t":"Being a mom means saying the sentence: do not lick your brother. Twice. Before nine a.m.","b":"Strong Mom Quotes","c":"Funny Mom Quotes","s":"funny-mom-quotes"},{"t":"My hobbies include reheating coffee and finding shoes that were in someone's hand ten seconds ago.","b":"Strong Mom Quotes","c":"Funny Mom Quotes","s":"funny-mom-quotes"},{"t":"Sleep like a baby, they said. My baby wakes up every forty minutes to check I still exist.","b":"Strong Mom Quotes","c":"Funny Mom Quotes","s":"funny-mom-quotes"},{"t":"I childproofed the house. The children still got in.","b":"Strong Mom Quotes","c":"Funny Mom Quotes","s":"funny-mom-quotes"},{"t":"You know you are a mom when hiding in the bathroom counts as a spa day.","b":"Strong Mom Quotes","c":"Funny Mom Quotes","s":"funny-mom-quotes"},{"t":"Dinner options tonight: take it or leave it.","b":"Strong Mom Quotes","c":"Funny Mom Quotes","s":"funny-mom-quotes"},{"t":"My child asked where I got my patience. I told him I was still waiting for it to be delivered.","b":"Strong Mom Quotes","c":"Funny Mom Quotes","s":"funny-mom-quotes"},{"t":"Motherhood is a constant loop of wondering what that smell is.","b":"Strong Mom Quotes","c":"Funny Mom Quotes","s":"funny-mom-quotes"},{"t":"I love all my children equally. Especially the one who is currently asleep.","b":"Strong Mom Quotes","c":"Funny Mom Quotes","s":"funny-mom-quotes"},{"t":"They say kids keep you young. Mine keep me caffeinated, which is basically the same thing.","b":"Strong Mom Quotes","c":"Funny Mom Quotes","s":"funny-mom-quotes"},{"t":"She is the provider and the comfort, the discipline and the softness. Both parents live in her.","b":"Strong Mom Quotes","c":"Single Mom Quotes","s":"single-mom-quotes"},{"t":"A single mom does the work of two and somehow still saves the best of herself for her children.","b":"Strong Mom Quotes","c":"Single Mom Quotes","s":"single-mom-quotes"},{"t":"Nobody claps when she pays the bills, packs the lunches and shows up to everything alone. So this is the applause.","b":"Strong Mom Quotes","c":"Single Mom Quotes","s":"single-mom-quotes"},{"t":"Being a single mother means your hardest days have no understudy. You go on anyway.","b":"Strong Mom Quotes","c":"Single Mom Quotes","s":"single-mom-quotes"},{"t":"She was not given an easy road, so she became the kind of woman who does not need one.","b":"Strong Mom Quotes","c":"Single Mom Quotes","s":"single-mom-quotes"},{"t":"One pair of hands, one tired heart, one entire childhood held safely together.","b":"Strong Mom Quotes","c":"Single Mom Quotes","s":"single-mom-quotes"},{"t":"Her children will grow up and understand: she was not just their mother. She was the whole team.","b":"Strong Mom Quotes","c":"Single Mom Quotes","s":"single-mom-quotes"},{"t":"A single mom's love is not half of anything. It is double everything.","b":"Strong Mom Quotes","c":"Single Mom Quotes","s":"single-mom-quotes"},{"t":"She learned to be the calm in the storm because there was no one else to be it.","b":"Strong Mom Quotes","c":"Single Mom Quotes","s":"single-mom-quotes"},{"t":"Every night she balances the books, the worries and the bedtime stories. Alone. And still gently.","b":"Strong Mom Quotes","c":"Single Mom Quotes","s":"single-mom-quotes"},{"t":"Raising children alone did not harden her heart. It proved how strong a soft heart can be.","b":"Strong Mom Quotes","c":"Single Mom Quotes","s":"single-mom-quotes"},{"t":"To the single moms: you are not doing it wrong because it is hard. It is hard because you are doing all of it.","b":"Strong Mom Quotes","c":"Single Mom Quotes","s":"single-mom-quotes"},{"t":"She built a childhood out of half the resources and twice the love.","b":"Strong Mom Quotes","c":"Single Mom Quotes","s":"single-mom-quotes"},{"t":"Some day her children will tell their children about her. That is the pension of a single mom, and it is enormous.","b":"Strong Mom Quotes","c":"Single Mom Quotes","s":"single-mom-quotes"},{"t":"Alone is where she worked. Loved is how her children grew.","b":"Strong Mom Quotes","c":"Single Mom Quotes","s":"single-mom-quotes"},{"t":"She closes her laptop and opens her arms, and both jobs get her whole heart.","b":"Strong Mom Quotes","c":"Working Mom Quotes","s":"working-mom-quotes"},{"t":"A working mom does not balance work and family. She carries both, and that is stronger.","b":"Strong Mom Quotes","c":"Working Mom Quotes","s":"working-mom-quotes"},{"t":"Somewhere between the meeting and the school gate, she became unstoppable.","b":"Strong Mom Quotes","c":"Working Mom Quotes","s":"working-mom-quotes"},{"t":"Her children are watching her build a life. That is not time away from them. That is a lesson for them.","b":"Strong Mom Quotes","c":"Working Mom Quotes","s":"working-mom-quotes"},{"t":"She answers to a boss all day and a tiny board of directors all night.","b":"Strong Mom Quotes","c":"Working Mom Quotes","s":"working-mom-quotes"},{"t":"Working mom guilt is proof of love in both directions. Let it point, not punish.","b":"Strong Mom Quotes","c":"Working Mom Quotes","s":"working-mom-quotes"},{"t":"The same hands that type the reports tie the shoelaces. Do not underestimate those hands.","b":"Strong Mom Quotes","c":"Working Mom Quotes","s":"working-mom-quotes"},{"t":"She is not half a mother and half a professional. She is fully both, which makes her twice as much.","b":"Strong Mom Quotes","c":"Working Mom Quotes","s":"working-mom-quotes"},{"t":"Every promotion she earns, she earns twice: once at work and once at home the same day.","b":"Strong Mom Quotes","c":"Working Mom Quotes","s":"working-mom-quotes"},{"t":"Some days work wins, some days home wins. Every day her children win, because she keeps showing up to both.","b":"Strong Mom Quotes","c":"Working Mom Quotes","s":"working-mom-quotes"},{"t":"Behind many great careers is a woman who also knows every word of a bedtime story by heart.","b":"Strong Mom Quotes","c":"Working Mom Quotes","s":"working-mom-quotes"},{"t":"She commutes between two worlds daily and is the sun in both of them.","b":"Strong Mom Quotes","c":"Working Mom Quotes","s":"working-mom-quotes"},{"t":"A working mother is a masterclass in priorities taught at full speed.","b":"Strong Mom Quotes","c":"Working Mom Quotes","s":"working-mom-quotes"},{"t":"The out of office reply is on, but a mother is never off duty. Respect the double shift.","b":"Strong Mom Quotes","c":"Working Mom Quotes","s":"working-mom-quotes"},{"t":"Her calendar is full. Her heart is fuller.","b":"Strong Mom Quotes","c":"Working Mom Quotes","s":"working-mom-quotes"},{"t":"The day her baby was born, a mother was born too, and both of them are still learning.","b":"Strong Mom Quotes","c":"New Mom Quotes","s":"new-mom-quotes"},{"t":"Nobody tells you the nights are so long and the year is so short.","b":"Strong Mom Quotes","c":"New Mom Quotes","s":"new-mom-quotes"},{"t":"You have known this child a few weeks and already you cannot remember who you were without them.","b":"Strong Mom Quotes","c":"New Mom Quotes","s":"new-mom-quotes"},{"t":"New mom, you are not behind. There is no schedule. There is only the two of you, figuring it out together.","b":"Strong Mom Quotes","c":"New Mom Quotes","s":"new-mom-quotes"},{"t":"At three in the morning it feels endless. One day these will be the nights you miss.","b":"Strong Mom Quotes","c":"New Mom Quotes","s":"new-mom-quotes"},{"t":"Your baby does not need a perfect mother. Your baby needs you, and already loves you completely.","b":"Strong Mom Quotes","c":"New Mom Quotes","s":"new-mom-quotes"},{"t":"The house is a mess and the baby is fed and held. You are doing this exactly right.","b":"Strong Mom Quotes","c":"New Mom Quotes","s":"new-mom-quotes"},{"t":"A newborn takes everything you have and repays it with one small smile. Somehow the math works.","b":"Strong Mom Quotes","c":"New Mom Quotes","s":"new-mom-quotes"},{"t":"She counts fingers, counts toes, counts breaths in the dark. New love keeps careful accounts.","b":"Strong Mom Quotes","c":"New Mom Quotes","s":"new-mom-quotes"},{"t":"Ask for help. It is not a weakness. It is how mothers have raised babies since the beginning.","b":"Strong Mom Quotes","c":"New Mom Quotes","s":"new-mom-quotes"},{"t":"Every mother in history started exactly where you are: unsure, exhausted and utterly in love.","b":"Strong Mom Quotes","c":"New Mom Quotes","s":"new-mom-quotes"},{"t":"You will fold the tiny clothes a hundred times and one day they will suddenly be too small. Take the photo now.","b":"Strong Mom Quotes","c":"New Mom Quotes","s":"new-mom-quotes"},{"t":"The first year rewrites you. Be patient with the woman being rewritten.","b":"Strong Mom Quotes","c":"New Mom Quotes","s":"new-mom-quotes"},{"t":"You grew a person. Growing into their mother is allowed to take a little time.","b":"Strong Mom Quotes","c":"New Mom Quotes","s":"new-mom-quotes"},{"t":"One tiny hand around your finger, and your heart signed a contract with no end date.","b":"Strong Mom Quotes","c":"New Mom Quotes","s":"new-mom-quotes"},{"t":"She is raising a boy, which means she is raising the man some family will one day be grateful for.","b":"Strong Mom Quotes","c":"Boy Mom Quotes","s":"boy-mom-quotes"},{"t":"A boy mom's house is louder, muddier and somehow fuller of flowers picked from the neighbor's garden.","b":"Strong Mom Quotes","c":"Boy Mom Quotes","s":"boy-mom-quotes"},{"t":"Sons grow tall, but they never grow out of needing their mother's voice.","b":"Strong Mom Quotes","c":"Boy Mom Quotes","s":"boy-mom-quotes"},{"t":"Teach him to be brave and gentle, and you have given the world a good man.","b":"Strong Mom Quotes","c":"Boy Mom Quotes","s":"boy-mom-quotes"},{"t":"He will not remember the spotless floors. He will remember that you played on them.","b":"Strong Mom Quotes","c":"Boy Mom Quotes","s":"boy-mom-quotes"},{"t":"A mother is her son's first hero and his standard for kindness.","b":"Strong Mom Quotes","c":"Boy Mom Quotes","s":"boy-mom-quotes"},{"t":"Boy moms speak fluent dinosaur, referee wrestling matches and heal all wounds with one kiss.","b":"Strong Mom Quotes","c":"Boy Mom Quotes","s":"boy-mom-quotes"},{"t":"One day his hugs will come from shoulders taller than yours. He learned those hugs from you.","b":"Strong Mom Quotes","c":"Boy Mom Quotes","s":"boy-mom-quotes"},{"t":"The little boy who brings you rocks and worms is bringing you his whole heart. Accept the worms.","b":"Strong Mom Quotes","c":"Boy Mom Quotes","s":"boy-mom-quotes"},{"t":"Raising a boy is loud work with a quiet reward: the kind man he becomes.","b":"Strong Mom Quotes","c":"Boy Mom Quotes","s":"boy-mom-quotes"},{"t":"She kisses scraped knees now so he will know how to be tender later.","b":"Strong Mom Quotes","c":"Boy Mom Quotes","s":"boy-mom-quotes"},{"t":"A son's first love story is simple: his mother showed up, every single day.","b":"Strong Mom Quotes","c":"Boy Mom Quotes","s":"boy-mom-quotes"},{"t":"Mud washes out. The memory of a mother who said yes to the puddles never does.","b":"Strong Mom Quotes","c":"Boy Mom Quotes","s":"boy-mom-quotes"},{"t":"To the mom of boys: the noise is temporary. The character you are building is not.","b":"Strong Mom Quotes","c":"Boy Mom Quotes","s":"boy-mom-quotes"},{"t":"Somewhere under the toy trucks and odd socks, a good man is under construction. You are the foreman.","b":"Strong Mom Quotes","c":"Boy Mom Quotes","s":"boy-mom-quotes"},{"t":"She is not just raising a daughter. She is raising the woman her granddaughters will tell stories about.","b":"Strong Mom Quotes","c":"Girl Mom Quotes","s":"girl-mom-quotes"},{"t":"A daughter learns what her voice is worth by hearing how her mother uses hers.","b":"Strong Mom Quotes","c":"Girl Mom Quotes","s":"girl-mom-quotes"},{"t":"Braids, big feelings and boundless questions: the beautiful weather of raising girls.","b":"Strong Mom Quotes","c":"Girl Mom Quotes","s":"girl-mom-quotes"},{"t":"Your daughter is watching how you speak to yourself. Speak kindly. She is taking notes.","b":"Strong Mom Quotes","c":"Girl Mom Quotes","s":"girl-mom-quotes"},{"t":"First her hand fits in yours. Then her shoes fit yours. Then, one astonishing day, her strength matches yours.","b":"Strong Mom Quotes","c":"Girl Mom Quotes","s":"girl-mom-quotes"},{"t":"Raise her brave first. The world will try to teach her small; make sure you got there before it.","b":"Strong Mom Quotes","c":"Girl Mom Quotes","s":"girl-mom-quotes"},{"t":"A mother and daughter are two chapters of the same story, reading each other.","b":"Strong Mom Quotes","c":"Girl Mom Quotes","s":"girl-mom-quotes"},{"t":"Teach your daughter that kind and strong are not opposites. Show her by being both.","b":"Strong Mom Quotes","c":"Girl Mom Quotes","s":"girl-mom-quotes"},{"t":"The tea parties are practice. One day she will pour her courage the way you poured yours.","b":"Strong Mom Quotes","c":"Girl Mom Quotes","s":"girl-mom-quotes"},{"t":"She borrows your shoes today. She has been borrowing your courage all along.","b":"Strong Mom Quotes","c":"Girl Mom Quotes","s":"girl-mom-quotes"},{"t":"A girl mom's greatest work is invisible: the confidence stitched quietly into her daughter every day.","b":"Strong Mom Quotes","c":"Girl Mom Quotes","s":"girl-mom-quotes"},{"t":"Someday she will face something hard and hear your voice inside her own. Make it a kind one.","b":"Strong Mom Quotes","c":"Girl Mom Quotes","s":"girl-mom-quotes"},{"t":"Between mothers and daughters there is a language older than words.","b":"Strong Mom Quotes","c":"Girl Mom Quotes","s":"girl-mom-quotes"},{"t":"You are her first mirror. Reflect back the strong, lovely girl she really is.","b":"Strong Mom Quotes","c":"Girl Mom Quotes","s":"girl-mom-quotes"},{"t":"Little girls with big dreams become women with vision, especially when their mother believed first.","b":"Strong Mom Quotes","c":"Girl Mom Quotes","s":"girl-mom-quotes"},{"t":"She is tired in her bones and still gentle with her hands. That is a kind of heroism.","b":"Strong Mom Quotes","c":"Tired Mom Quotes","s":"tired-mom-quotes"},{"t":"Being exhausted and still showing up is not failing. It is the very definition of showing up.","b":"Strong Mom Quotes","c":"Tired Mom Quotes","s":"tired-mom-quotes"},{"t":"Tonight you are tired because today you were needed. Both things are true, and one of them is beautiful.","b":"Strong Mom Quotes","c":"Tired Mom Quotes","s":"tired-mom-quotes"},{"t":"Even on the days she runs on empty, her children run on her love. Somehow there is always fuel for that.","b":"Strong Mom Quotes","c":"Tired Mom Quotes","s":"tired-mom-quotes"},{"t":"Rest is not a reward you must earn, mama. It is a repair you are owed.","b":"Strong Mom Quotes","c":"Tired Mom Quotes","s":"tired-mom-quotes"},{"t":"You did not lose your patience today because you are a bad mother. You ran out because you gave it all away.","b":"Strong Mom Quotes","c":"Tired Mom Quotes","s":"tired-mom-quotes"},{"t":"The dishes can wait. The tired woman holding this phone cannot. Sit down for five minutes.","b":"Strong Mom Quotes","c":"Tired Mom Quotes","s":"tired-mom-quotes"},{"t":"Some days the victory is simply this: everyone was loved and everyone was fed. Take the win.","b":"Strong Mom Quotes","c":"Tired Mom Quotes","s":"tired-mom-quotes"},{"t":"A tired mom is not a weak mom. She is a strong one who has been strong too long without help.","b":"Strong Mom Quotes","c":"Tired Mom Quotes","s":"tired-mom-quotes"},{"t":"You comfort everyone in this house. Consider this your reminder that you count as someone too.","b":"Strong Mom Quotes","c":"Tired Mom Quotes","s":"tired-mom-quotes"},{"t":"The exhaustion is real. So is the fact that you are somebody's whole safe world.","b":"Strong Mom Quotes","c":"Tired Mom Quotes","s":"tired-mom-quotes"},{"t":"Go to bed, mama. The to-do list is lying to you about what matters.","b":"Strong Mom Quotes","c":"Tired Mom Quotes","s":"tired-mom-quotes"},{"t":"Hard days do not mean you are doing it wrong. They mean you are doing it, which is more than it looks like.","b":"Strong Mom Quotes","c":"Tired Mom Quotes","s":"tired-mom-quotes"},{"t":"One day at a time is not a small plan. Some seasons, it is the bravest plan there is.","b":"Strong Mom Quotes","c":"Tired Mom Quotes","s":"tired-mom-quotes"},{"t":"Tomorrow you will be somebody's sunshine again. Tonight, let yourself be tired without guilt.","b":"Strong Mom Quotes","c":"Tired Mom Quotes","s":"tired-mom-quotes"},{"t":"You are doing better than you think. Doubt just gets louder in a quiet house at night.","b":"Strong Mom Quotes","c":"Encouraging Quotes for Moms","s":"encouraging-quotes-for-moms"},{"t":"The love you pour in is landing, even on the days you cannot see where it went.","b":"Strong Mom Quotes","c":"Encouraging Quotes for Moms","s":"encouraging-quotes-for-moms"},{"t":"Your children got exactly the mother they needed. It has been you all along.","b":"Strong Mom Quotes","c":"Encouraging Quotes for Moms","s":"encouraging-quotes-for-moms"},{"t":"You are allowed to be a masterpiece and a work in progress at the same time. Every mother is.","b":"Strong Mom Quotes","c":"Encouraging Quotes for Moms","s":"encouraging-quotes-for-moms"},{"t":"Look how far you have carried this family. Now say one kind thing to the woman who carried it.","b":"Strong Mom Quotes","c":"Encouraging Quotes for Moms","s":"encouraging-quotes-for-moms"},{"t":"Good mothers worry they are not good mothers. The worrying is the proof.","b":"Strong Mom Quotes","c":"Encouraging Quotes for Moms","s":"encouraging-quotes-for-moms"},{"t":"Nobody sees everything you do. But everything you do is quietly building people. Keep going.","b":"Strong Mom Quotes","c":"Encouraging Quotes for Moms","s":"encouraging-quotes-for-moms"},{"t":"This season is heavy, not endless. You have outlasted every hard season so far. Your record is perfect.","b":"Strong Mom Quotes","c":"Encouraging Quotes for Moms","s":"encouraging-quotes-for-moms"},{"t":"You do not have to be everything today. Being there is already most of it.","b":"Strong Mom Quotes","c":"Encouraging Quotes for Moms","s":"encouraging-quotes-for-moms"},{"t":"Somewhere in the mess of today, you did a hundred loving things without noticing. Your children noticed.","b":"Strong Mom Quotes","c":"Encouraging Quotes for Moms","s":"encouraging-quotes-for-moms"},{"t":"Comparison will show you every mother's highlight reel and none of their laundry. Close the app. You are enough.","b":"Strong Mom Quotes","c":"Encouraging Quotes for Moms","s":"encouraging-quotes-for-moms"},{"t":"Small, steady love changes lives. Yours is the steadiest love in the building.","b":"Strong Mom Quotes","c":"Encouraging Quotes for Moms","s":"encouraging-quotes-for-moms"},{"t":"One day your grown children will describe their childhood, and you will finally hear how well you did.","b":"Strong Mom Quotes","c":"Encouraging Quotes for Moms","s":"encouraging-quotes-for-moms"},{"t":"You have never done this exact day with these exact children before. Be as patient with yourself as you are with them.","b":"Strong Mom Quotes","c":"Encouraging Quotes for Moms","s":"encouraging-quotes-for-moms"},{"t":"Mama, the fact that you are trying this hard means it is going to be okay.","b":"Strong Mom Quotes","c":"Encouraging Quotes for Moms","s":"encouraging-quotes-for-moms"},{"t":"Mom, everything soft and strong in me, I learned by watching you.","b":"Strong Mom Quotes","c":"Mom Quotes from Daughter","s":"mom-quotes-from-daughter"},{"t":"The older I get, the more I realize my mother was right about nearly everything, including me.","b":"Strong Mom Quotes","c":"Mom Quotes from Daughter","s":"mom-quotes-from-daughter"},{"t":"You were my first home, my first friend and my first example of what love looks like on its feet.","b":"Strong Mom Quotes","c":"Mom Quotes from Daughter","s":"mom-quotes-from-daughter"},{"t":"I hear your voice in my kindest thoughts. Thank you for putting it there.","b":"Strong Mom Quotes","c":"Mom Quotes from Daughter","s":"mom-quotes-from-daughter"},{"t":"Now that I am grown, I finally see it: all those ordinary days were you giving me everything.","b":"Strong Mom Quotes","c":"Mom Quotes from Daughter","s":"mom-quotes-from-daughter"},{"t":"Mom, you clapped for me before I did anything worth clapping for. That is why I dared to try.","b":"Strong Mom Quotes","c":"Mom Quotes from Daughter","s":"mom-quotes-from-daughter"},{"t":"Half of who I am is you. It is my favorite half.","b":"Strong Mom Quotes","c":"Mom Quotes from Daughter","s":"mom-quotes-from-daughter"},{"t":"You held my hand until I could walk, then held my heart while I walked away, then welcomed me home every time.","b":"Strong Mom Quotes","c":"Mom Quotes from Daughter","s":"mom-quotes-from-daughter"},{"t":"The strongest woman I know calls me her greatest achievement. Mom, you are mine.","b":"Strong Mom Quotes","c":"Mom Quotes from Daughter","s":"mom-quotes-from-daughter"},{"t":"I used to roll my eyes at your advice. Now I give it to my friends, word for word.","b":"Strong Mom Quotes","c":"Mom Quotes from Daughter","s":"mom-quotes-from-daughter"},{"t":"However old I get, some part of me will always be a little girl looking for you in a crowd.","b":"Strong Mom Quotes","c":"Mom Quotes from Daughter","s":"mom-quotes-from-daughter"},{"t":"You taught me to be brave by never letting me see how scared you were.","b":"Strong Mom Quotes","c":"Mom Quotes from Daughter","s":"mom-quotes-from-daughter"},{"t":"There are not enough Mother's Days in a lifetime to thank you properly. So I will just keep trying.","b":"Strong Mom Quotes","c":"Mom Quotes from Daughter","s":"mom-quotes-from-daughter"},{"t":"Mom, if I become half the woman you are, my daughter will be lucky.","b":"Strong Mom Quotes","c":"Mom Quotes from Daughter","s":"mom-quotes-from-daughter"},{"t":"Every good thing I do carries your fingerprints.","b":"Strong Mom Quotes","c":"Mom Quotes from Daughter","s":"mom-quotes-from-daughter"},{"t":"I am the mother my children need, exactly as I am today.","b":"Strong Mom Quotes","c":"Affirmations for Moms","s":"affirmations-for-moms"},{"t":"I am allowed to rest without earning it first.","b":"Strong Mom Quotes","c":"Affirmations for Moms","s":"affirmations-for-moms"},{"t":"My love is doing more good than my worry can see.","b":"Strong Mom Quotes","c":"Affirmations for Moms","s":"affirmations-for-moms"},{"t":"I am patient with my children and with myself.","b":"Strong Mom Quotes","c":"Affirmations for Moms","s":"affirmations-for-moms"},{"t":"I release the standard of perfect and choose the standard of present.","b":"Strong Mom Quotes","c":"Affirmations for Moms","s":"affirmations-for-moms"},{"t":"My home is built on love, not on tidiness.","b":"Strong Mom Quotes","c":"Affirmations for Moms","s":"affirmations-for-moms"},{"t":"I am raising good humans, one ordinary day at a time.","b":"Strong Mom Quotes","c":"Affirmations for Moms","s":"affirmations-for-moms"},{"t":"I trust myself to know my children better than any opinion online.","b":"Strong Mom Quotes","c":"Affirmations for Moms","s":"affirmations-for-moms"},{"t":"Today I will speak to myself the way I speak to my children: kindly.","b":"Strong Mom Quotes","c":"Affirmations for Moms","s":"affirmations-for-moms"},{"t":"I am strong enough for this day, and only this day is asked of me.","b":"Strong Mom Quotes","c":"Affirmations for Moms","s":"affirmations-for-moms"},{"t":"Asking for help is one of my parenting skills.","b":"Strong Mom Quotes","c":"Affirmations for Moms","s":"affirmations-for-moms"},{"t":"I am more than the tasks I complete.","b":"Strong Mom Quotes","c":"Affirmations for Moms","s":"affirmations-for-moms"},{"t":"My best is enough, even on the days my best looks smaller.","b":"Strong Mom Quotes","c":"Affirmations for Moms","s":"affirmations-for-moms"},{"t":"I choose progress in this house, not perfection.","b":"Strong Mom Quotes","c":"Affirmations for Moms","s":"affirmations-for-moms"},{"t":"I am the safe place, and I deserve one too.","b":"Strong Mom Quotes","c":"Affirmations for Moms","s":"affirmations-for-moms"},{"t":"I am doing the work of two with one heart, and my heart is enough.","b":"Strong Mom Quotes","c":"Single Mom Affirmations","s":"single-mom-affirmations"},{"t":"I am building a childhood my children will feel safe inside.","b":"Strong Mom Quotes","c":"Single Mom Affirmations","s":"single-mom-affirmations"},{"t":"I make hard decisions alone, and I make them with love.","b":"Strong Mom Quotes","c":"Single Mom Affirmations","s":"single-mom-affirmations"},{"t":"My family is whole because love makes it whole.","b":"Strong Mom Quotes","c":"Single Mom Affirmations","s":"single-mom-affirmations"},{"t":"I am allowed to be tired and still be proud.","b":"Strong Mom Quotes","c":"Single Mom Affirmations","s":"single-mom-affirmations"},{"t":"Every bill paid, every lunch packed, every story read: I did that.","b":"Strong Mom Quotes","c":"Single Mom Affirmations","s":"single-mom-affirmations"},{"t":"I am my children's steady ground, and I am steadier than I feel.","b":"Strong Mom Quotes","c":"Single Mom Affirmations","s":"single-mom-affirmations"},{"t":"I release guilt for what I cannot give and honor everything I do give.","b":"Strong Mom Quotes","c":"Single Mom Affirmations","s":"single-mom-affirmations"},{"t":"I am raising resilient children by showing them resilience daily.","b":"Strong Mom Quotes","c":"Single Mom Affirmations","s":"single-mom-affirmations"},{"t":"My strength today is my children's example tomorrow.","b":"Strong Mom Quotes","c":"Single Mom Affirmations","s":"single-mom-affirmations"},{"t":"I am not behind in life. I am carrying more and still moving.","b":"Strong Mom Quotes","c":"Single Mom Affirmations","s":"single-mom-affirmations"},{"t":"I accept help without shame, because strong is not the same as alone.","b":"Strong Mom Quotes","c":"Single Mom Affirmations","s":"single-mom-affirmations"},{"t":"I am the calm and the courage in this house.","b":"Strong Mom Quotes","c":"Single Mom Affirmations","s":"single-mom-affirmations"},{"t":"One pair of hands, one determined heart, one beautiful family.","b":"Strong Mom Quotes","c":"Single Mom Affirmations","s":"single-mom-affirmations"},{"t":"I am enough parent for this family. I always have been.","b":"Strong Mom Quotes","c":"Single Mom Affirmations","s":"single-mom-affirmations"},{"t":"I am learning my baby, and my baby is learning me. We have time.","b":"Strong Mom Quotes","c":"New Mom Affirmations","s":"new-mom-affirmations"},{"t":"I am the right mother for this child.","b":"Strong Mom Quotes","c":"New Mom Affirmations","s":"new-mom-affirmations"},{"t":"My body did something extraordinary, and it deserves my kindness.","b":"Strong Mom Quotes","c":"New Mom Affirmations","s":"new-mom-affirmations"},{"t":"I do not need to know everything today. I only need to love today.","b":"Strong Mom Quotes","c":"New Mom Affirmations","s":"new-mom-affirmations"},{"t":"It is safe to ask for help. Mothers were never meant to do this alone.","b":"Strong Mom Quotes","c":"New Mom Affirmations","s":"new-mom-affirmations"},{"t":"Every feed, every cuddle, every small win counts, even the ones nobody sees.","b":"Strong Mom Quotes","c":"New Mom Affirmations","s":"new-mom-affirmations"},{"t":"I am allowed to miss my old life and love my new one at the same time.","b":"Strong Mom Quotes","c":"New Mom Affirmations","s":"new-mom-affirmations"},{"t":"My baby does not compare me to anyone. Neither should I.","b":"Strong Mom Quotes","c":"New Mom Affirmations","s":"new-mom-affirmations"},{"t":"This hard night will pass, and I will still be a good mother in the morning.","b":"Strong Mom Quotes","c":"New Mom Affirmations","s":"new-mom-affirmations"},{"t":"I trust my instincts. They are wiser than my doubts.","b":"Strong Mom Quotes","c":"New Mom Affirmations","s":"new-mom-affirmations"},{"t":"A fed baby, a held baby, a loved baby: I am doing this right.","b":"Strong Mom Quotes","c":"New Mom Affirmations","s":"new-mom-affirmations"},{"t":"I am becoming a mother at exactly the pace I should.","b":"Strong Mom Quotes","c":"New Mom Affirmations","s":"new-mom-affirmations"},{"t":"Slow days with my baby are not wasted days.","b":"Strong Mom Quotes","c":"New Mom Affirmations","s":"new-mom-affirmations"},{"t":"I give myself the same grace I give this brand new person.","b":"Strong Mom Quotes","c":"New Mom Affirmations","s":"new-mom-affirmations"},{"t":"I am tired, I am learning, and I am exactly what my baby needs.","b":"Strong Mom Quotes","c":"New Mom Affirmations","s":"new-mom-affirmations"},{"t":"I am showing my children what dedication looks like.","b":"Strong Mom Quotes","c":"Working Mom Affirmations","s":"working-mom-affirmations"},{"t":"I can love my work and love my family without apology.","b":"Strong Mom Quotes","c":"Working Mom Affirmations","s":"working-mom-affirmations"},{"t":"I am present where I am: at my desk, at the dinner table, in this moment.","b":"Strong Mom Quotes","c":"Working Mom Affirmations","s":"working-mom-affirmations"},{"t":"My children are not harmed by my ambition. They are inspired by it.","b":"Strong Mom Quotes","c":"Working Mom Affirmations","s":"working-mom-affirmations"},{"t":"I do two important jobs, and I am allowed to be proud of both.","b":"Strong Mom Quotes","c":"Working Mom Affirmations","s":"working-mom-affirmations"},{"t":"I release the guilt that asks me to be in two places at once.","b":"Strong Mom Quotes","c":"Working Mom Affirmations","s":"working-mom-affirmations"},{"t":"Providing for my family is an act of love.","b":"Strong Mom Quotes","c":"Working Mom Affirmations","s":"working-mom-affirmations"},{"t":"I am building a future and a childhood at the same time.","b":"Strong Mom Quotes","c":"Working Mom Affirmations","s":"working-mom-affirmations"},{"t":"Some days lean work, some days lean home. Every day leans love.","b":"Strong Mom Quotes","c":"Working Mom Affirmations","s":"working-mom-affirmations"},{"t":"I am allowed to close the laptop. The work will keep. The moment will not.","b":"Strong Mom Quotes","c":"Working Mom Affirmations","s":"working-mom-affirmations"},{"t":"My worth is not measured in a perfectly balanced day.","b":"Strong Mom Quotes","c":"Working Mom Affirmations","s":"working-mom-affirmations"},{"t":"I bring my whole heart to both of my worlds.","b":"Strong Mom Quotes","c":"Working Mom Affirmations","s":"working-mom-affirmations"},{"t":"I am teaching my children that women build things.","b":"Strong Mom Quotes","c":"Working Mom Affirmations","s":"working-mom-affirmations"},{"t":"Rest is part of my job description too.","b":"Strong Mom Quotes","c":"Working Mom Affirmations","s":"working-mom-affirmations"},{"t":"I am doing enough, at work and at home, even when it feels like neither.","b":"Strong Mom Quotes","c":"Working Mom Affirmations","s":"working-mom-affirmations"},{"t":"I am angry nearly every day of my life, but I have learned not to show it; and I still hope to learn not to feel it.","b":"Louisa May Alcott, Little Women (1868), spoken by Marmee","c":"Classic Mom Quotes","s":"classic-mom-quotes"},{"t":"Mother is the name for God in the lips and hearts of little children.","b":"William Makepeace Thackeray, Vanity Fair (1848)","c":"Classic Mom Quotes","s":"classic-mom-quotes"},{"t":"A mother is a mother still, the holiest thing alive.","b":"Samuel Taylor Coleridge, The Three Graves (1798)","c":"Classic Mom Quotes","s":"classic-mom-quotes"},{"t":"If I were hanged on the highest hill, I know whose love would follow me still. Mother o' mine.","b":"Rudyard Kipling, Mother o' Mine (1891)","c":"Classic Mom Quotes","s":"classic-mom-quotes"},{"t":"Who ran to help me when I fell, and would some pretty story tell, or kiss the place to make it well? My mother.","b":"Ann Taylor, My Mother (1804)","c":"Classic Mom Quotes","s":"classic-mom-quotes"},{"t":"The hand that rocks the cradle is the hand that rules the world.","b":"William Ross Wallace, poem title and refrain (1865)","c":"Classic Mom Quotes","s":"classic-mom-quotes"},{"t":"All that I am, or hope to be, I owe to my angel mother.","b":"Attributed to Abraham Lincoln by his biographer William Herndon","c":"Classic Mom Quotes","s":"classic-mom-quotes"},{"t":"Strength and dignity are her clothing. She laughs at the time to come.","b":"Proverbs 31:25, World English Bible (public domain translation)","c":"Classic Mom Quotes","s":"classic-mom-quotes"},{"t":"God could not be everywhere, and therefore he made mothers.","b":"Traditional proverb","c":"Classic Mom Quotes","s":"classic-mom-quotes"},{"t":"An ounce of mother is worth a pound of clergy.","b":"Traditional Spanish proverb","c":"Classic Mom Quotes","s":"classic-mom-quotes"}];/*POOL_END*/
+(function(){
+var LS={dl:'smq_downloads',unlock:'smq_unlocked',email:'smq_email',favs:'smq_favs',mine:'smq_mine'};
+var CFG={salt:'',freeUses:3,minSeconds:3};
+var state={bg:0,font:'serif',size:'square'};
+var pageOpenedAt=Date.now();
+var gateMode='signup';
+
+function lsGet(k,d){try{var v=localStorage.getItem(k);return v===null?d:JSON.parse(v);}catch(e){return d;}}
+function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+function lsRaw(k){try{return localStorage.getItem(k);}catch(e){return null;}}
+function lsRawSet(k,v){try{localStorage.setItem(k,v);}catch(e){}}
+function toast(m){if(window.smqToast)window.smqToast(m);}
+
+/* Remote config: the page hard-codes no salt and no thresholds. */
+fetch('/subscribe.php?config=1').then(function(r){return r.json();}).then(function(c){
+  if(c&&c.ok){CFG.salt=c.salt||'';CFG.freeUses=c.freeUses||3;CFG.minSeconds=c.minSeconds||3;updateUsesNote();}
+}).catch(function(){});
+
+var params=new URLSearchParams(location.search);
+if(params.get('gatekey')==='SMQ-KEY-7413'){lsRawSet(LS.unlock,'1');lsRawSet(LS.email,'tester@strongmomquotes.com');toast('Tester unlock applied');}
+if(params.get('gatereset')==='SMQ-RESET-7413'){lsSet(LS.dl,0);try{localStorage.removeItem(LS.unlock);localStorage.removeItem(LS.email);}catch(e){}toast('Counter reset');}
+if(params.get('q')){document.getElementById('qtext').value=params.get('q').slice(0,300);}
+if(params.get('by')){document.getElementById('qby').value=params.get('by').slice(0,80);}
+
+/* Tabs */
+var tabs=document.querySelectorAll('.tabs button');
+function openTab(name){
+  tabs.forEach(function(b){b.setAttribute('aria-selected',b.dataset.tab===name?'true':'false');});
+  document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active');});
+  document.getElementById('panel-'+name).classList.add('active');
+  if(name==='favorites')renderFavs();
+  if(name==='mine')renderMine();
+  if(name==='settings')renderAcctState();
+}
+tabs.forEach(function(b){b.addEventListener('click',function(){openTab(b.dataset.tab);history.replaceState(null,'','#'+b.dataset.tab);});});
+var hash=location.hash.replace('#','');
+if(['daily','favorites','mine','settings'].indexOf(hash)!==-1)openTab(hash);
+
+/* Backgrounds */
+var BGS=[
+ {name:'Plum dusk',a:'#4A3A50',b:'#37303F',ink:'#FBF3EE',acc:'#C9962E'},
+ {name:'Raspberry',a:'#A64D63',b:'#7E3348',ink:'#FFF6F1',acc:'#F2D8A7'},
+ {name:'Warm paper',a:'#FDF9F5',b:'#F3E7DE',ink:'#37303F',acc:'#A64D63'},
+ {name:'Sage calm',a:'#8FA58B',b:'#66805F',ink:'#FBFBF4',acc:'#F2E3C0'},
+ {name:'Dusty blue',a:'#7C90A6',b:'#54677E',ink:'#F6F9FC',acc:'#EFD9A0'},
+ {name:'Blush',a:'#F2DDDA',b:'#E4BEBB',ink:'#5A3A44',acc:'#A64D63'},
+ {name:'Midnight',a:'#2A2733',b:'#17151E',ink:'#F4EDE7',acc:'#C9962E'},
+ {name:'Golden hour',a:'#E8B36A',b:'#C67B44',ink:'#3D2A1E',acc:'#FFF3DD'}
+];
+var bgsEl=document.getElementById('bgs');
+BGS.forEach(function(bg,i){
+  var b=document.createElement('button');
+  b.type='button';b.title=bg.name;b.setAttribute('aria-label',bg.name);
+  b.style.background='linear-gradient(150deg,'+bg.a+','+bg.b+')';
+  b.setAttribute('aria-pressed',i===0?'true':'false');
+  b.addEventListener('click',function(){state.bg=i;bgsEl.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed','false');});b.setAttribute('aria-pressed','true');draw();});
+  bgsEl.appendChild(b);
+});
+document.getElementById('fonts').addEventListener('click',function(e){
+  var b=e.target.closest('button');if(!b)return;
+  state.font=b.dataset.font;
+  this.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed','false');});
+  b.setAttribute('aria-pressed','true');draw();
+});
+var SIZES={square:{w:1080,h:1080},pin:{w:1000,h:1500},story:{w:1080,h:1920}};
+document.getElementById('sizes').addEventListener('click',function(e){
+  var b=e.target.closest('button');if(!b)return;
+  state.size=b.dataset.size;
+  this.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed','false');});
+  b.setAttribute('aria-pressed','true');draw();
+});
+document.getElementById('qtext').addEventListener('input',draw);
+document.getElementById('qby').addEventListener('input',draw);
+
+var cv=document.getElementById('cv'),ctx=cv.getContext('2d');
+function fontStack(weight,px){
+  if(state.font==='clean')return weight+' '+px+'px Karla, sans-serif';
+  var it=state.font==='italic'?'italic ':'';
+  return it+weight+' '+px+'px Fraunces, Georgia, serif';
+}
+function wrapLines(text,px,maxW){
+  ctx.font=fontStack('600',px);
+  var words=text.split(/\s+/),lines=[],line='';
+  words.forEach(function(w){
+    var test=line?line+' '+w:w;
+    if(ctx.measureText(test).width>maxW&&line){lines.push(line);line=w;}else{line=test;}
+  });
+  if(line)lines.push(line);
+  return lines;
+}
+function draw(){
+  var s=SIZES[state.size];cv.width=s.w;cv.height=s.h;
+  var bg=BGS[state.bg];
+  var g=ctx.createLinearGradient(0,0,s.w,s.h);
+  g.addColorStop(0,bg.a);g.addColorStop(1,bg.b);
+  ctx.fillStyle=g;ctx.fillRect(0,0,s.w,s.h);
+  ctx.save();ctx.globalAlpha=.12;ctx.strokeStyle=bg.acc;ctx.lineWidth=s.w*.012;
+  ctx.beginPath();ctx.arc(s.w*.12,s.h*.1,s.w*.18,0,7);ctx.stroke();
+  ctx.beginPath();ctx.arc(s.w*.9,s.h*.92,s.w*.22,0,7);ctx.stroke();ctx.restore();
+  var pad=s.w*.12,maxW=s.w-pad*2;
+  var text=document.getElementById('qtext').value.trim()||'Your quote here';
+  var by=document.getElementById('qby').value.trim();
+  var px=Math.round(s.w*.075),lines;
+  do{lines=wrapLines(text,px,maxW);var block=lines.length*px*1.28;
+     if(block>s.h*.55||lines.some(function(l){ctx.font=fontStack('600',px);return ctx.measureText(l).width>maxW;}))px-=3;else break;
+  }while(px>26);
+  ctx.fillStyle=bg.acc;ctx.font=fontStack('700',Math.round(px*2.4));
+  var totalH=lines.length*px*1.28;
+  var startY=(s.h-totalH)/2+px*.4;
+  ctx.textAlign='center';
+  ctx.fillText('\u201C',s.w/2,startY-px*1.35);
+  ctx.fillStyle=bg.ink;ctx.font=fontStack('600',px);
+  lines.forEach(function(l,i){ctx.fillText(l,s.w/2,startY+i*px*1.28);});
+  if(by){ctx.fillStyle=bg.acc;ctx.font='700 '+Math.round(s.w*.026)+'px Karla, sans-serif';
+    ctx.fillText(by.toUpperCase(),s.w/2,startY+totalH+px*.5);}
+  ctx.fillStyle=bg.ink;ctx.globalAlpha=.55;
+  ctx.font='700 '+Math.round(s.w*.021)+'px Karla, sans-serif';
+  ctx.fillText('strongmomquotes.com',s.w/2,s.h-s.h*.04);
+  ctx.globalAlpha=1;
+}
+if(document.fonts&&document.fonts.ready){document.fonts.ready.then(draw);}
+draw();
+
+/* Gate */
+function unlocked(){return lsRaw(LS.unlock)==='1';}
+function usesLeft(){return Math.max(0,CFG.freeUses-lsGet(LS.dl,0));}
+function updateUsesNote(){
+  var n=document.getElementById('usesNote');
+  if(!n)return;
+  if(unlocked()){n.textContent='Card maker unlocked on this device. Currently free.';}
+  else{n.textContent=usesLeft()+' of '+CFG.freeUses+' free downloads left, then a free signup keeps it unlocked on this device.';}
+}
+updateUsesNote();
+function renderAcctState(){
+  var el=document.getElementById('acctState');
+  if(!el)return;
+  var email=lsRaw(LS.email);
+  el.textContent=(unlocked()&&email)?('Signed in as '+email+'. Every tool unlocked, free.'):'You have not signed in on this device yet.';
+}
+renderAcctState();
+
+function doDownload(){
+  draw();
+  var a=document.createElement('a');
+  a.download='strong-mom-quote-'+state.size+'.png';
+  a.href=cv.toDataURL('image/png');
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+  toast('Card downloaded');
+}
+document.getElementById('downloadBtn').addEventListener('click',function(){
+  if(unlocked()){doDownload();return;}
+  var used=lsGet(LS.dl,0);
+  if(used<CFG.freeUses){lsSet(LS.dl,used+1);doDownload();updateUsesNote();return;}
+  showGate('signup');
+});
+
+function showGate(mode){
+  gateMode=mode||'signup';
+  var m=document.getElementById('gateModal');
+  document.getElementById('gateErr').style.display='none';
+  document.getElementById('gateOk').style.display='none';
+  var t=document.getElementById('gateTitle'),s=document.getElementById('gateSub'),
+      b=document.getElementById('gateSubmit'),alt=document.getElementById('gateAlt'),
+      perks=document.getElementById('gatePerks');
+  if(gateMode==='signin'){
+    t.textContent='Welcome back';
+    s.textContent='Enter the same email you confirmed before and this device unlocks straight away.';
+    b.textContent='Unlock this device';
+    perks.style.display='none';
+    alt.innerHTML='New here? <button type="button" id="toSignup" style="background:none;border:0;color:var(--accent);font-weight:800;cursor:pointer;font-family:inherit;text-decoration:underline">Create your free account instead.</button>';
+    var su=document.getElementById('toSignup');
+    if(su)su.addEventListener('click',function(){showGate('signup');});
+  }else{
+    t.textContent='Keep making free cards';
+    s.textContent='You have used your three free downloads. Confirm your email to keep going.';
+    b.textContent='Send my free unlock link';
+    perks.style.display='block';
+    alt.innerHTML='Already signed up? <button type="button" id="toSignin2" style="background:none;border:0;color:var(--accent);font-weight:800;cursor:pointer;font-family:inherit;text-decoration:underline">Enter the same email to unlock this device.</button>';
+    var si=document.getElementById('toSignin2');
+    if(si)si.addEventListener('click',function(){showGate('signin');});
+    try{navigator.sendBeacon('/subscribe.php?event=gate');}catch(e){}
+  }
+  b.disabled=false;
+  m.classList.add('open');
+  document.getElementById('gateEmail').focus();
+}
+window.smqOpenGate=showGate;
+if(params.get('signin')==='1'&&!unlocked()){showGate('signin');}
+var ts0=document.getElementById('toSignin');
+if(ts0)ts0.addEventListener('click',function(){showGate('signin');});
+
+function closeGate(){document.getElementById('gateModal').classList.remove('open');}
+document.getElementById('gateModal').addEventListener('click',function(e){if(e.target===this)closeGate();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeGate();});
+
+async function sha256hex(str){
+  var buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,'0');}).join('');
+}
+function unlockDevice(email){
+  lsRawSet(LS.unlock,'1');
+  lsRawSet(LS.email,email);
+  if(window.smqRenderAccount)window.smqRenderAccount();
+  updateUsesNote();renderAcctState();
+}
+document.getElementById('gateForm').addEventListener('submit',async function(e){
+  e.preventDefault();
+  var email=document.getElementById('gateEmail').value.trim().toLowerCase();
+  var err=document.getElementById('gateErr'),okmsg=document.getElementById('gateOk');
+  err.style.display='none';okmsg.style.display='none';
+  var btn=document.getElementById('gateSubmit');btn.disabled=true;btn.textContent='One moment';
+  var ts=pageOpenedAt;
+  var payload={mode:gateMode,email:email,ts:ts,website:this.website.value||''};
+  try{payload.token=await sha256hex(email+'|'+ts+'|'+CFG.salt);}catch(ex){payload.token='';}
+  try{
+    var res=await fetch('/subscribe.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    var data=null;try{data=await res.json();}catch(ex){data=null;}
+    if(res.ok&&data&&data.ok&&data.status==='verified'){
+      unlockDevice(email);closeGate();toast('Unlocked. Welcome back.');doDownload();
+    }else if(res.ok&&data&&data.ok&&data.status==='pending'){
+      /* Never auto-verify: the link in her inbox is the wall. */
+      okmsg.textContent='Check your inbox. Click the link we just sent to '+email+' and the card maker unlocks.';
+      okmsg.style.display='block';
+      btn.disabled=false;btn.textContent='Resend the link';
+    }else if(res.status===400&&data&&data.error){
+      err.textContent=data.error;err.style.display='block';
+      btn.disabled=false;btn.textContent=(gateMode==='signin')?'Unlock this device':'Send my free unlock link';
+    }else{
+      /* Server trouble: fail open on the tool, but never mark verified. */
+      lsSet(LS.dl,0);closeGate();toast('Our end had a hiccup, so your cards are on us. Try signing up again later.');doDownload();
+    }
+  }catch(ex){
+    lsSet(LS.dl,0);closeGate();toast('Our end had a hiccup, so your cards are on us. Try signing up again later.');doDownload();
+  }
+});
+
+/* Favorites */
+function getFavs(){return lsGet(LS.favs,[]);}
+function toggleFav(t,b){
+  var favs=getFavs();
+  var i=favs.findIndex(function(f){return f.t===t;});
+  if(i===-1){favs.unshift({t:t,b:b});toast('Saved to favorites');}
+  else{favs.splice(i,1);toast('Removed from favorites');}
+  lsSet(LS.favs,favs);
+}
+document.getElementById('favBtn').addEventListener('click',function(){
+  toggleFav(document.getElementById('qtext').value.trim(),document.getElementById('qby').value.trim());
+});
+function quoteRow(q,removable,fromMine){
+  var d=document.createElement('div');d.className='qrow';
+  var bq=document.createElement('blockquote');bq.textContent='\u201C'+q.t+'\u201D';
+  var by=document.createElement('p');by.className='by';by.textContent=q.b||'';
+  var tools=document.createElement('div');tools.className='row-tools';
+  function mk(label,fn){var b=document.createElement('button');b.type='button';b.textContent=label;b.addEventListener('click',fn);return b;}
+  tools.appendChild(mk('Make a card',function(){
+    document.getElementById('qtext').value=q.t;
+    document.getElementById('qby').value=q.b||'';
+    openTab('maker');draw();window.scrollTo({top:0});
+  }));
+  tools.appendChild(mk('Copy',function(){
+    var full=q.t+(q.b?' ('+q.b+')':'');
+    if(navigator.clipboard)navigator.clipboard.writeText(full).then(function(){toast('Quote copied');});
+  }));
+  if(removable)tools.appendChild(mk('Remove',function(){
+    if(fromMine){var m=lsGet(LS.mine,[]);lsSet(LS.mine,m.filter(function(x){return x.t!==q.t;}));renderMine();}
+    else{toggleFav(q.t,q.b);renderFavs();}
+  }));
+  d.appendChild(bq);d.appendChild(by);d.appendChild(tools);
+  return d;
+}
+function renderFavs(){
+  var list=document.getElementById('favList');list.innerHTML='';
+  var favs=getFavs();
+  document.getElementById('favEmpty').style.display=favs.length?'none':'block';
+  favs.forEach(function(q){list.appendChild(quoteRow(q,true,false));});
+}
+
+/* My quotes */
+document.getElementById('mineAdd').addEventListener('click',function(){
+  var t=document.getElementById('mineText').value.trim();
+  if(!t){toast('Write your quote first');return;}
+  var m=lsGet(LS.mine,[]);m.unshift({t:t,b:'My own words'});lsSet(LS.mine,m);
+  document.getElementById('mineText').value='';
+  renderMine();toast('Quote saved on this device');
+});
+function renderMine(){
+  var list=document.getElementById('mineList');list.innerHTML='';
+  lsGet(LS.mine,[]).forEach(function(q){list.appendChild(quoteRow(q,true,true));});
+}
+
+/* Daily quote, with a contextual link back to its own collection */
+var pool=(typeof QUOTE_POOL!=='undefined'&&QUOTE_POOL.length)?QUOTE_POOL:[{t:'You are the calm your children borrow when the day is too loud.',b:'Strong Mom Quotes',c:'Strong Mom Quotes',s:'strong-mom-quotes'}];
+var dayIndex=Math.floor(Date.now()/86400000)%pool.length;
+var dailyOffset=0;
+function currentDaily(){return pool[(dayIndex+dailyOffset)%pool.length];}
+function showDaily(){
+  var q=currentDaily();
+  document.getElementById('dailyText').textContent=q.t;
+  document.getElementById('dailyBy').textContent=(q.b+' \u00B7 '+q.c).toUpperCase();
+  var src=document.getElementById('dailySource');
+  if(q.s){src.innerHTML='More like this in <a href="/'+q.s+'.html">'+q.c+'</a>.';}
+  else{src.textContent='';}
+}
+showDaily();
+document.getElementById('dailyShuffle').addEventListener('click',function(){dailyOffset++;showDaily();});
+document.getElementById('dailyMake').addEventListener('click',function(){
+  var q=currentDaily();
+  document.getElementById('qtext').value=q.t;
+  document.getElementById('qby').value=q.b;
+  openTab('maker');draw();window.scrollTo({top:0});
+});
+document.getElementById('dailyFav').addEventListener('click',function(){
+  var q=currentDaily();toggleFav(q.t,q.b);
+});
+
+/* Backup and restore */
+document.getElementById('backupBtn').addEventListener('click',function(){
+  var data={app:'strongmomquotes',version:1,exported:new Date().toISOString(),favorites:getFavs(),myQuotes:lsGet(LS.mine,[])};
+  var blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  var a=document.createElement('a');
+  a.download='strongmomquotes-backup.json';
+  a.href=URL.createObjectURL(blob);
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+  toast('Backup downloaded');
+});
+document.getElementById('restoreFile').addEventListener('change',function(){
+  var f=this.files[0];if(!f)return;
+  var reader=new FileReader();
+  reader.onload=function(){
+    try{
+      var data=JSON.parse(reader.result);
+      if(data.app!=='strongmomquotes')throw new Error('wrong file');
+      var favs=Array.isArray(data.favorites)?data.favorites:[];
+      var mine=Array.isArray(data.myQuotes)?data.myQuotes:[];
+      var ok=confirm('This backup contains '+favs.length+' favorites and '+mine.length+' of your own quotes. Restore them to this device?');
+      if(!ok)return;
+      lsSet(LS.favs,favs);lsSet(LS.mine,mine);
+      renderFavs();renderMine();toast('Backup restored');
+    }catch(e){toast('That file is not a Strong Mom Quotes backup');}
+  };
+  reader.readAsText(f);
+  this.value='';
+});
+
+if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js').catch(function(){});}
+})();
+</script>
+</body>
+</html>
