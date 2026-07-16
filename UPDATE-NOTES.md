@@ -1,3 +1,34 @@
+# Strong Mom Quotes V6 (July 2026)
+
+## Card maker: live preview now stays in view while editing
+- Desktop: the preview is pinned (sticky) beside the controls, so every frame,
+  accent, colour or text change is visible without scrolling back up.
+- Mobile: the header releases on scroll and the preview sticks to the top as a
+  compact strip (about 38% of the screen), so edits are always visible.
+
+## Footer now groups horizontally
+- The column blocks (Quote Categories, Free Tools, Why Strong Mom Quotes, Site)
+  were stacking vertically because the inner .cols wrapper had no column styling.
+  Fixed site-wide with one CSS rule; folds to fewer columns on tablet and phone.
+
+## Account area redesigned
+- Signed in now shows only a round avatar with your initial. The email address is
+  tucked into a small menu that opens when you tap the avatar (best practice).
+- Sign in and Sign out are now proper branded buttons, not plain text.
+
+## Favicon rebuilt and Google-compliant
+- Redesigned the mark with proper padding so it no longer looks oversized, and
+  regenerated all sizes including a 48x48 (Google's recommended multiple).
+
+## Homepage metadata sharpened for SEO
+- Keyword-focused title, robots max-image-preview:large for rich results,
+  theme-color, og:locale, a keywords tag, and an enriched WebSite schema.
+
+## Deploy checklist (unchanged)
+- Ensure secrets.php has smtp_pass; upload the full package; resubmit sitemap.xml.
+
+---
+
 # Strong Mom Quotes V5 (July 2026)
 
 ## Card maker: creative toolbox (NEW, all optional, off by default)

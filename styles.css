@@ -233,3 +233,23 @@ footer.mega .legal{grid-column:1/-1;border-top:1px solid rgba(255,255,255,.12);m
 .gen-form .btn{width:100%;margin-top:6px;justify-content:center}
 .gen-result{white-space:pre-wrap;font-family:'Fraunces',serif;font-size:1.08rem;line-height:1.6;color:var(--ink);min-height:180px;background:var(--paper);border-radius:12px;padding:20px;border:1px solid var(--line-soft)}
 @media(max-width:720px){.gen-body{grid-template-columns:1fr}}
+
+/* ---------- Footer: keep the column blocks horizontal whether or not
+   they are wrapped in a .cols container (display:contents lets the inner
+   columns become direct grid items of .wrap) ---------- */
+footer.mega .cols{display:contents}
+
+/* ---------- Account control: avatar, dropdown menu and buttons ---------- */
+.acct{position:relative;display:inline-flex;align-items:center;margin-left:10px}
+.signin-btn{display:inline-flex;align-items:center;gap:6px;background:var(--grad-accent);color:#fff;font-weight:800;font-family:inherit;font-size:.9rem;padding:9px 18px;border-radius:999px;border:0;cursor:pointer;box-shadow:0 6px 16px -6px rgba(176,75,102,.5);transition:transform .2s var(--ease),box-shadow .2s var(--ease)}
+.signin-btn:hover{color:#fff;transform:translateY(-1px);box-shadow:0 10px 22px -8px rgba(176,75,102,.6)}
+.avatar{width:40px;height:40px;border-radius:999px;border:0;cursor:pointer;background:var(--grad-accent);color:#fff;font-weight:800;font-family:inherit;font-size:1.02rem;display:inline-flex;align-items:center;justify-content:center;box-shadow:0 5px 14px -5px rgba(176,75,102,.55);transition:transform .2s var(--ease),box-shadow .2s var(--ease)}
+.avatar:hover{transform:translateY(-1px);box-shadow:0 9px 20px -7px rgba(176,75,102,.6)}
+.acct-menu{position:absolute;top:calc(100% + 12px);right:0;min-width:230px;background:var(--cream);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:0 20px 44px -14px rgba(46,39,51,.3);opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .18s var(--ease),transform .18s var(--ease),visibility .18s;z-index:60}
+.acct-menu.open{opacity:1;visibility:visible;transform:translateY(0)}
+.acct-menu::before{content:'';position:absolute;top:-7px;right:15px;width:12px;height:12px;background:var(--cream);border-left:1px solid var(--line);border-top:1px solid var(--line);transform:rotate(45deg)}
+.acct-menu .em{font-weight:700;color:var(--ink);font-size:.9rem;margin:0 0 3px;word-break:break-all}
+.acct-menu .reassure{color:var(--muted);font-size:.82rem;margin:0}
+.acct-menu hr{border:0;border-top:1px solid var(--line);margin:12px 0}
+.acct-menu .signout{width:100%;background:var(--blush);color:var(--accent-dark);border:0;border-radius:999px;padding:10px 14px;font-weight:800;font-family:inherit;font-size:.88rem;cursor:pointer;transition:background .2s var(--ease)}
+.acct-menu .signout:hover{background:var(--gold-soft)}
