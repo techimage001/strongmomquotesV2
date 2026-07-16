@@ -1,5 +1,5 @@
 /* ============================================================
-   Strong Mom Quotes — Premium design system v4 (Soft & Modern)
+   Strong Mom Quotes: Premium design system v4 (Soft & Modern)
    Warm, airy, Pinterest-native. Depth via layered shadows and
    soft gradients, not decoration. Generous space. Confident type.
    ============================================================ */
@@ -194,3 +194,42 @@ footer.mega .legal{grid-column:1/-1;border-top:1px solid rgba(255,255,255,.12);m
   .btn{padding:11px 18px;font-size:.92rem}
 }
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+
+/* ===== Interactive tools page ===== */
+.mood-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin:22px 0}
+.mood-grid button{background:var(--cream);border:1.5px solid var(--line-soft);border-radius:var(--radius);padding:20px 14px;cursor:pointer;font-family:inherit;font-weight:800;font-size:.98rem;color:var(--ink);display:flex;flex-direction:column;align-items:center;gap:8px;transition:all .25s var(--ease);box-shadow:var(--shadow-sm)}
+.mood-grid button span{font-size:1.9rem;line-height:1}
+.mood-grid button:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:var(--blush)}
+.mood-grid button.on{background:var(--grad-accent);color:#fff;border-color:transparent;box-shadow:var(--shadow-glow)}
+.searchbar{max-width:620px;margin:20px auto 0}
+.searchbar input{width:100%;padding:16px 22px;border:1.5px solid var(--line);border-radius:999px;font-family:inherit;font-size:1.05rem;background:var(--cream);box-shadow:var(--shadow-sm);transition:border-color .2s var(--ease),box-shadow .2s var(--ease)}
+.searchbar input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 4px var(--blush)}
+.results-head{text-align:center;margin:10px 0 4px}
+.results-head .count{display:inline-block;background:var(--blush);color:var(--accent);font-family:'Karla',sans-serif;font-size:.9rem;font-weight:800;padding:2px 12px;border-radius:999px;vertical-align:middle;margin-left:6px}
+.linklike{background:none;border:0;color:var(--accent);font-weight:800;cursor:pointer;font-family:inherit;font-size:inherit;text-decoration:underline}
+.two-tools{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin:44px 0}
+.tool-card{background:var(--cream);border:1px solid var(--line-soft);border-radius:var(--radius-lg);padding:30px 26px;box-shadow:var(--shadow-md);position:relative;overflow:hidden}
+.tool-card::before{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:var(--grad-gold)}
+.tool-card h3{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:800;margin:0 0 14px}
+.tool-card blockquote{margin:0;font-family:'Fraunces',serif;font-size:1.3rem;line-height:1.4;color:var(--ink);font-weight:500;min-height:2em}
+.tool-card .by{color:var(--muted);font-size:.76rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700;margin:12px 0 0}
+.tool-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.tool-actions button,.tool-actions a{font-size:.84rem;font-weight:800;padding:9px 16px;border-radius:999px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink-soft);cursor:pointer;font-family:inherit;transition:all .2s var(--ease);text-decoration:none}
+.tool-actions button:hover{border-color:var(--accent);color:var(--accent)}
+.qcard .readBtn{border-color:var(--line)}
+@media(max-width:640px){.two-tools{grid-template-columns:1fr}}
+
+/* ===== Message generators ===== */
+.gen-tabs{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:10px 0 26px}
+.gen-tabs button{background:var(--cream);border:1.5px solid var(--line);border-radius:999px;padding:11px 20px;font-family:inherit;font-weight:800;font-size:.92rem;color:var(--ink-soft);cursor:pointer;transition:all .2s var(--ease)}
+.gen-tabs button:hover{border-color:var(--accent);color:var(--accent)}
+.gen-tabs button.on{background:var(--grad-accent);color:#fff;border-color:transparent;box-shadow:0 8px 18px -10px rgba(176,75,102,.6)}
+.gen-body{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+.gen-form,.gen-out{background:var(--cream);border:1px solid var(--line-soft);border-radius:var(--radius-lg);padding:28px;box-shadow:var(--shadow-md)}
+.gen-form h3,.gen-out h3{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:800;margin:0 0 16px}
+.gen-label{display:block;font-weight:700;font-size:.9rem;color:var(--ink-soft);margin-bottom:14px}
+.gen-label input{display:block;width:100%;margin-top:6px;padding:12px 15px;border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:.98rem;background:var(--paper)}
+.gen-label input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--blush)}
+.gen-form .btn{width:100%;margin-top:6px;justify-content:center}
+.gen-result{white-space:pre-wrap;font-family:'Fraunces',serif;font-size:1.08rem;line-height:1.6;color:var(--ink);min-height:180px;background:var(--paper);border-radius:12px;padding:20px;border:1px solid var(--line-soft)}
+@media(max-width:720px){.gen-body{grid-template-columns:1fr}}

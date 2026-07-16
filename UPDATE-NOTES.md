@@ -1,52 +1,87 @@
-# Strong Mom Quotes: expansion to ~150 pages (July 2026)
+# Strong Mom Quotes V5 (July 2026)
+
+## Card maker: creative toolbox (NEW, all optional, off by default)
+- FRAMES (pick independently of colour): Classic double keyline, Gold deco corner
+  brackets, Soft arch mat, Botanical corner sprigs, Ribbon banner, Minimal inset.
+- LITTLE ACCENT motifs: heart, star, sparkles, flower, leaf, sun, baby rattle.
+- TEXT STYLE: clean, underline flourish, statement (uppercase), quote marks.
+- All drawn in code (no external images) so they stay copyright-safe and print crisp.
+  Spacing tuned so accents and quote marks never crowd the text or author line.
+
+## Card downloads now carry metadata + a descriptive filename (NEW)
+- Each downloaded/shared PNG embeds tEXt metadata: Title (the quote), Description,
+  Author, Copyright, Source (https://strongmomquotes.com), Software.
+- Filename is now e.g. strong-mom-quotes-his-safe-place-forever-square.png.
+- Helps Google Images and provenance. NOTE: most social apps strip file metadata and
+  set alt text themselves, so this is for image SEO/provenance, not the platform alt tag.
+
+## SEO / metadata / internal linking (completed the paused audit)
+- OG + Twitter + JSON-LD schema added to contact, app, privacy, terms.
+- Visual breadcrumbs + 3-level BreadcrumbList schema added to the 3 original pages
+  (encouraging-quotes-for-moms, mom-quotes-from-daughter, classic-mom-quotes); those
+  3 are now listed in the Collections hub.
+- all-quotes.html (the full A to Z index, linked from the homepage and the sitewide
+  footer) now covers every page, including the 3 originals plus a Tools and extras
+  section (card maker, tools, message writers).
+- Sibling-collection link bands added to tools.html and generators.html.
+- Removed stray em dashes from code comments, toasts and diagnostics.
+
+## SMTP
+- Unchanged. Authenticated SMTP stays scoped to strongmomquotes.com (no porting).
+
+## Deploy checklist
+- Ensure secrets.php has smtp_pass (info@ mailbox password).
+- Upload the full package (includes /og/, /data/quotes.json, tools.js, generators.js,
+  smtp_mailer.php, styles.css, site.js, sitemap.xml).
+- Resubmit sitemap.xml in Search Console.
+
+---
+
+# Strong Mom Quotes: major feature build (July 2026)
+
+## SMTP email fix (INCLUDED IN THIS BUILD)
+- subscribe.php + verify.php now send via authenticated SMTP (smtp_mailer.php),
+  not PHP mail(). Add 'smtp_pass' (the info@ mailbox password) to secrets.php.
+- Fixes emails going out from the wrong identity / not sending.
+
+## NEW: Find the Right Words (tools.html) — the "feel understood" entry point
+- MOOD FINDER: pick how today feels (overwhelmed, mum guilt, exhausted, need a lift,
+  proud, grateful, want a laugh, missing someone) and get quotes that match.
+- INSTANT SEARCH across all 698 quotes (client-side, fast).
+- RANDOM quote generator ("Surprise me").
+- QUOTE OF THE DAY (same for everyone each day, a reason to return).
+- Powered by quotes.json (698 original quotes, mood-tagged).
+
+## NEW: Message Writers (generators.html) — long-tail SEO + real utility
+- Letter to Mom, Thank You Mom, Baby Shower Message, Mother's Day Speech.
+- Answer a few prompts, get a heartfelt ORIGINAL message (template engine,
+  many variations, no AI cost, nothing stored). Copy, read aloud, or "try another version".
+
+## NEW high-intent content pages (from the competitor/Reddit analysis, no duplication)
+- Burnout Mom Quotes, Christian Mom Quotes, Stay-at-Home Mom Quotes,
+  Missing My Mom Quotes, Birthday Quotes for Mom, Healing Mom Quotes,
+  Morning Quotes for Moms, Good Night Mom Quotes, Mother's Love Quotes,
+  Strong Mother Daughter Quotes.
+- Corpus grown to 698 original quotes to fill them properly.
+
+## Every quote page now has
+- COPY button, READ ALOUD button (Web Speech API), and "Make a card".
+- The card maker Share button + illustrations + colour picker + FB/LinkedIn sizes
+  from previous updates remain.
+
+## Sharing
+- Per-page OG SHARE IMAGES (branded 1200x630) for home, tools, generators, the hubs,
+  and top pages, so Pinterest/Facebook shares look rich instead of bare.
+- "Check your inbox (and spam)" confirmation message improved after signup.
 
 ## Totals
-- **155 pages total**: 140 content pages + 6 hubs + A-Z directory + existing/legal pages.
-- Corpus data layer: **626 original quotes**, tagged by audience, tone, life-stage, theme, length.
-
-## What was added to reach 150
-- Deeper life stages: grandma, stepmom, adoptive mom, twin mom, toddler mom,
-  moms of teenagers, special-needs mom (careful, affirming, non-clinical), mom of boys/girls, proud mom.
-- More affirmation need-states: boundaries, patience, morning, bedtime, exhausted,
-  overwhelmed, confidence, grandma, stepmom, special-needs.
-- More captions & occasions: grandma, mom-life, mother-daughter, mother-son, family,
-  birthday for son/daughter, new baby, pregnancy announcement.
-- More theme pages and formats (wall art, mugs, inspirational, two-word).
-- The full Dads & Single Parents wing (23 pages) is retained.
-
-## Quality gate (all passing)
-- Worst similarity between any two pages: **0.45 Jaccard** (bar 0.72).
-- Words: min 689, average 863.
-- Every title and meta description unique sitewide.
-- FAQ schema built FROM visible text (parity by construction).
-- Zero orphans, every internal link resolves, breadcrumbs + gate + ads + card links on every page.
-- Every quote original and unattributed (except the clearly-sourced public-domain Classic page).
-
-## Architecture
-- Hub-and-spoke: Home -> 6 hubs -> spokes, 2 clicks from home, reciprocal linking, A-Z directory.
-- Sitemap: 155 URLs.
-- Card maker stamps strongmomquotes.com on every downloaded card (Pinterest growth loop).
+- 167 pages total (150 content + tools + generators + hubs + directory + legal).
+- QA 15/15: worst similarity 0.37, avg 901 words, unique titles/descriptions,
+  FAQ parity, zero orphans, all links resolve.
+- Sitemap: 167 URLs.
 
 ## Deploy
-1. Upload all files, commit, deploy.
-2. Resubmit sitemap.xml (155 URLs) in Search Console.
-3. Hard-refresh (assets cache-busted to v=3).
-4. Secrets stay in smq_private/secrets.php on the server.
-
-## PREMIUM REDESIGN + FEATURES (this update)
-- Complete visual redesign to a premium "soft & modern" system: layered shadows,
-  soft ambient gradients, refined quote cards with gradient accent + hover lift,
-  glassy sticky header, accordion FAQs with +/x toggle, dark gradient footer,
-  gradient hero headline. All 140 content pages inherit it automatically.
-- Card maker: added a CUSTOM COLOUR PICKER (any colour, with automatic light/dark
-  text contrast so cards are never unreadable), plus FACEBOOK POST (1200x630) and
-  LINKEDIN POST (1200x627) sizes alongside Instagram/Pinterest/Story.
-- Unique favicon: an SMQ monogram with a gold quote mark in the plum brand palette
-  (favicon.svg + PNG sizes + apple-touch-icon), wired into all 155 pages.
-
-## On ads.txt "Not found" and sitemap "Couldn't fetch"
-Both files are correct and live (verified). The statuses are because the site is
-newly deployed and Google/AdSense have not finished their first crawl. They resolve
-on their own once the site has been live and reachable for 24-48 hours. Re-submit
-the sitemap in Search Console; ads.txt flips to Authorized after AdSense crawls it.
-No file change was needed.
+1. Add 'smtp_pass' to secrets.php (info@ mailbox password).
+2. Upload everything (incl. /og/ folder, quotes.json, tools.js, generators.js,
+   smtp_mailer.php). Commit, deploy, hard-refresh.
+3. Resubmit sitemap.xml (167 URLs).

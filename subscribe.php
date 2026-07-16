@@ -7,6 +7,7 @@
    never auto-verify. No CAPTCHA, by design. */
 declare(strict_types=1);
 require __DIR__ . '/config.php';
+require __DIR__ . '/smtp_mailer.php';
 
 header('Content-Type: application/json; charset=utf-8');
 header('X-Robots-Tag: noindex');
@@ -202,6 +203,6 @@ $body = "Welcome to Strong Mom Quotes.\n\n"
       . "The link works for " . VERIFY_EXPIRY_HOURS . " hours. It is 100% free: no payment, no card details.\n\n"
       . "If you did not sign up, ignore this email and nothing happens.\n\n"
       . "strongmomquotes.com\n";
-@mail($email, $subject, $body, 'From: ' . FROM_EMAIL);
+global $SMQ_SECRETS; send_mail_smart($SMQ_SECRETS, $email, $subject, $body);
 
 respond(200, ['ok' => true, 'status' => 'pending']);

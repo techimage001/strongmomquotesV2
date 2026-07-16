@@ -126,3 +126,16 @@
   window.smqRenderAccount = render;
   render();
 })();
+
+/* Read aloud (Web Speech API): works on every page that has .readBtn */
+document.addEventListener('click',function(e){
+  var r=e.target.closest('[data-read]');
+  if(!r)return;
+  if(!('speechSynthesis'in window)){return;}
+  var u=new SpeechSynthesisUtterance(r.getAttribute('data-read'));
+  u.rate=0.95;u.pitch=1;
+  speechSynthesis.cancel();speechSynthesis.speak(u);
+  var t=r.textContent;r.textContent='Reading\u2026';
+  u.onend=function(){r.textContent=t;};
+  setTimeout(function(){if(r.textContent==='Reading\u2026')r.textContent=t;},4000);
+});

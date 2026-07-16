@@ -4,6 +4,7 @@
    lead verified, and unlocks the browser it was opened in. */
 declare(strict_types=1);
 require __DIR__ . '/config.php';
+require __DIR__ . '/smtp_mailer.php';
 header('X-Robots-Tag: noindex, nofollow');
 
 function vdb(): ?PDO {
@@ -41,7 +42,7 @@ if (preg_match('/^[a-f0-9]{32}$/', $token) === 1) {
                     $up = $pdo->prepare('UPDATE leads SET verified = 1, verified_at = ?, verify_token = NULL WHERE id = ?');
                     $up->execute([gmdate('c'), (int)$row['id']]);
                     $state = 'done';
-                    @mail(NOTIFY_EMAIL, 'New verified Strong Mom Quotes signup', "Verified signup: {$email}\nTime (UTC): " . gmdate('c') . "\n", 'From: ' . FROM_EMAIL);
+                    global $SMQ_SECRETS; send_mail_smart($SMQ_SECRETS, NOTIFY_EMAIL, 'New verified Strong Mom Quotes signup', "Verified signup: {$email}\nTime (UTC): " . gmdate('c') . "\n");
                 }
             }
         } catch (Throwable $e) { $state = 'invalid'; }
