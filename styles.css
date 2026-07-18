@@ -60,12 +60,12 @@ header.site{
   -webkit-backdrop-filter:saturate(180%) blur(14px);
   border-bottom:1px solid var(--line-soft);position:sticky;top:0;z-index:50;
 }
-header.site .wrap{display:flex;align-items:center}
-.nav{display:flex;align-items:center;gap:6px;width:100%;padding:14px 0}
-.logo{font-family:'Fraunces',Georgia,serif;font-size:1.3rem;font-weight:700;color:var(--ink);letter-spacing:-.02em}
+header.site .wrap{display:flex;flex-wrap:wrap;align-items:center}
+.nav{display:flex;align-items:center;gap:3px;width:100%;padding:16px 0;flex-wrap:nowrap}
+.logo{font-family:'Fraunces',Georgia,serif;font-size:1.24rem;font-weight:700;color:var(--ink);letter-spacing:-.02em;white-space:nowrap}
 .logo em{color:var(--accent);font-style:normal}
 .spacer{flex:1}
-.nav a.link{color:var(--ink-soft);font-weight:700;font-size:.92rem;padding:8px 12px;border-radius:999px;transition:all .2s var(--ease)}
+.nav a.link{color:var(--ink-soft);font-weight:600;font-size:.9rem;padding:8px 11px;border-radius:999px;white-space:nowrap;transition:all .2s var(--ease)}
 .nav a.link:hover{color:var(--accent);background:var(--blush)}
 .btn{
   display:inline-flex;align-items:center;gap:8px;background:var(--grad-accent);color:#fff;font-weight:800;
@@ -85,7 +85,7 @@ header.site .wrap{display:flex;align-items:center}
 .crumbs span{opacity:.5;margin:0 5px}
 
 /* ---------- Hero ---------- */
-.hero{text-align:center;padding:64px 0 40px;position:relative}
+.hero{text-align:center;padding:64px 0 40px;position:relative;overflow:clip}
 .hero .lede,.hero>p{max-width:640px;margin:20px auto 0;color:var(--ink-soft);font-size:1.12rem}
 .hero h1{background:linear-gradient(120deg,var(--ink) 40%,var(--accent) 120%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 .hero-quote-mark{font-family:'Fraunces',serif;font-size:3rem;color:var(--gold);line-height:1;display:block;margin-bottom:.2em}
@@ -253,3 +253,38 @@ footer.mega .cols{display:contents}
 .acct-menu hr{border:0;border-top:1px solid var(--line);margin:12px 0}
 .acct-menu .signout{width:100%;background:var(--blush);color:var(--accent-dark);border:0;border-radius:999px;padding:10px 14px;font-weight:800;font-family:inherit;font-size:.88rem;cursor:pointer;transition:background .2s var(--ease)}
 .acct-menu .signout:hover{background:var(--gold-soft)}
+
+/* ---- Responsive navigation: hamburger drawer + scrollable app tabs ---- */
+.navtoggle{display:none;align-items:center;justify-content:center;background:none;border:1.5px solid var(--line);border-radius:10px;font-size:1.15rem;line-height:1;width:44px;height:42px;cursor:pointer;color:var(--ink);margin-left:8px}
+.navtoggle:hover{background:var(--blush);border-color:var(--accent-2,var(--accent))}
+.navdrawer{display:none;flex-direction:column;gap:2px;padding:10px 0 18px;width:100%;border-top:1px solid var(--line-soft,var(--line))}
+.navdrawer a{padding:13px 14px;border-radius:12px;color:var(--ink-soft);font-weight:600;font-size:1.02rem;text-decoration:none}
+.navdrawer a:hover{background:var(--blush);color:var(--accent)}
+.navdrawer .btn{justify-content:center;margin-top:10px;width:100%}
+.navdrawer.open{display:flex}
+.nav .btn{padding:10px 17px;font-size:.9rem;white-space:nowrap}
+@media(max-width:900px){
+  .nav a.link{display:none}
+  .nav .navcta{display:none}
+  .navtoggle{display:inline-flex}
+  .tabs{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;gap:6px}
+  .tabs::-webkit-scrollbar{display:none}
+  .tabs button{flex:0 0 auto;white-space:nowrap}
+}
+@media(max-width:430px){ .logo{font-size:1.05rem} .nav{gap:2px} }
+
+/* ---- Card maker action bar ---- */
+.cardactions{margin-top:6px}
+.actionrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.act{display:inline-flex;align-items:center;gap:6px;background:#fff;color:var(--ink-soft);border:1.5px solid var(--line);border-radius:999px;padding:9px 16px;font-weight:700;font-size:.9rem;font-family:inherit;cursor:pointer;transition:border-color .18s var(--ease),color .18s var(--ease),background .18s var(--ease)}
+.act:hover{border-color:var(--accent);color:var(--accent);background:var(--blush)}
+.act .fh{color:var(--accent)}
+.act.on{border-color:var(--accent);color:var(--accent);background:var(--blush)}
+
+/* ---- No horizontal drift (clip, NOT hidden: hidden breaks position:sticky) ---- */
+html{max-width:100%;overflow-x:clip}
+body{max-width:100%;overflow-x:clip}
+@supports not (overflow-x:clip){body{overflow-x:hidden}}
+*,*::before,*::after{box-sizing:border-box}
+img,canvas,svg,video,table,pre{max-width:100%}
+body,a{overflow-wrap:break-word}

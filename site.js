@@ -139,3 +139,15 @@ document.addEventListener('click',function(e){
   u.onend=function(){r.textContent=t;};
   setTimeout(function(){if(r.textContent==='Reading\u2026')r.textContent=t;},4000);
 });
+
+/* Mobile nav drawer */
+(function(){
+  var t=document.getElementById('navToggle'), d=document.getElementById('navDrawer');
+  if(!t||!d)return;
+  t.addEventListener('click',function(){
+    var open=d.classList.toggle('open');
+    t.setAttribute('aria-expanded',open?'true':'false');
+    t.innerHTML=open?'\u2715':'\u2630';
+  });
+  d.addEventListener('click',function(e){ if(e.target.closest('a')) d.classList.remove('open'); });
+})();
