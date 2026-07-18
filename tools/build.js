@@ -14,7 +14,7 @@ const DATA = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'quotes.json'), 
 const DOMAIN = DATA.domain;
 const ADS_CLIENT = 'ca-pub-4138594802747479';
 const AD_SLOT = '0000000000'; /* placeholder: swap real slot IDs before launch, see README */
-const ASSET_V = '2';          /* bump on every release: busts caches for css and js */
+const ASSET_V='7';          /* bump on every release: busts caches for css and js */
 const TODAY = new Date().toISOString().slice(0, 10);
 
 /* Editorial grouping drives the "If you like this" blocks. These are
@@ -85,8 +85,12 @@ function headBlock(title, description, canonicalPath) {
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="${attr(title)}">
 <meta name="twitter:description" content="${attr(description)}">
-<link rel="icon" href="/icon-192.png">
-<link rel="apple-touch-icon" href="/icon-192.png">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/manifest.json">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -99,14 +103,24 @@ function headerNav() {
   return `<header class="site"><div class="wrap"><nav class="nav" aria-label="Main">
 <a class="logo" href="/">Strong<em>Mom</em>Quotes</a>
 <span class="spacer"></span>
-<a class="link" href="/#free">All Free Features</a>
+<a class="link hidesm" href="/#free">All Free Features</a>
 <a class="link hidesm" href="/#categories">Categories</a>
 <a class="link hidesm" href="/#how">How it works</a>
 <a class="link hidesm" href="/#faq">FAQ</a>
 <a class="link hidesm" href="/contact.html">Contact</a>
-<a class="btn" href="/app.html">Open the Card Maker</a>
+<a class="btn navcta" href="/app.html">Open the Card Maker</a>
 <span class="acct" id="acct"></span>
-</nav></div></header>`;
+<button class="navtoggle" id="navToggle" aria-label="Open menu" aria-controls="navDrawer" aria-expanded="false">\u2630</button>
+</nav>
+<div class="navdrawer" id="navDrawer">
+<a href="/#free">All Free Features</a>
+<a href="/#categories">Categories</a>
+<a href="/#how">How it works</a>
+<a href="/#faq">FAQ</a>
+<a href="/contact.html">Contact</a>
+<a class="btn" href="/app.html">Open the Card Maker</a>
+</div>
+</div></header>`;
 }
 
 function footerMega(cats) {
