@@ -1,6 +1,22 @@
 User-agent: *
 Allow: /
 Disallow: /leads.php
+Disallow: /admin/
+Disallow: /cron/
 Disallow: /subscribe.php
 Disallow: /verify.php
+Disallow: /unsubscribe.php
+
+# AI answer and search crawlers - allowed so pages stay eligible for AI citations
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: Claude-SearchBot
+Allow: /
+
+Sitemap: https://strongmomquotes.com/sitemap-index.xml
 Sitemap: https://strongmomquotes.com/sitemap.xml
+Sitemap: https://strongmomquotes.com/sitemap-blog.xml

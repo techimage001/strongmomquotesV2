@@ -1,0 +1,49 @@
+STRONG MOM QUOTES — SEO UPDATE (2026-07-22)
+Interim update to the live site. Content/quotes, titles and H1s are unchanged
+except where noted. This is the pre-rebuild pass; the full V9 tool-first rebuild
+is separate.
+
+WHAT CHANGED
+1. Advertising removed sitewide (now against the no-ads rule): all AdSense code
+   stripped from 167 pages, ads.txt deleted, privacy policy corrected to state
+   the site carries no adverts.
+2. Card maker (app.html) now has an H1 ("Free Mom Quote Card Maker"). Fixes the
+   Bing "H1 missing" notice on app.html and its 16 ?q= share URLs at once
+   (canonical to /app.html was already present, so the variants collapse).
+3. Answer-first intros: each collection page now opens with a direct, keyword-led
+   answer sentence (what Google AI Overviews and snippets lift), then the value
+   line. 159 pages updated. The quotes themselves are untouched.
+4. Trust: new "How we write our quotes" page (methodology), linked in the footer
+   sitewide, with brand-as-publisher schema (author = the Organization, no person,
+   no dates). Turns the original-and-unattributed policy into a visible trust signal.
+5. Sitemap fixed: now lists ALL 168 indexable pages (was 21). This is the biggest
+   discovery fix.
+6. robots.txt: explicitly allows the AI answer bots (OAI-SearchBot, ChatGPT-User,
+   PerplexityBot, Claude-SearchBot) so pages stay eligible for AI citations.
+7. Real 404 page that returns 404 (was serving the homepage = sitewide soft-404).
+8. Brand-publisher Organization schema added to every page.
+
+DEPLOY STEPS
+- Upload all files to public_html, overwriting.
+- DELETE ads.txt from the live server (git push may not remove it server-side).
+- secrets.php in the private folder is unchanged — leave it in place.
+- In Search Console and Bing: resubmit sitemap.xml.
+- URL Inspection > Request Indexing on the homepage and /app.html.
+- Optional: run your IndexNow submit for the changed URLs.
+
+NOW COMPLETE IN THIS ZIP (added in the final pass)
+- All 52 short meta descriptions rewritten to keyword-first, <=155 characters,
+  unique per page. Every page is now in range.
+- HowTo schema added to the card maker (app.html) and message writers (generators.html).
+- Focus keyword added to the FAQ heading on 150 content pages.
+- IndexNow key file (60ccb4a970104b1b83b9eb9cc6826746.txt) placed at the root.
+- Already correct in the base build and verified: fonts load with display=swap,
+  the card canvas has fixed dimensions (no layout shift), content images carry alt
+  text, and every page has a question-and-answer FAQ block with FAQPage schema.
+
+THE ONLY THING NOT HERE (it is the separate rebuild, not a patch)
+- The focused tool-first restructure: leading with the card maker and message tools,
+  and pruning the 167 pages down to the ~28-30 that can actually rank in a saturated
+  niche. That deletes pages, so it needs your sign-off on which to keep. It is the
+  thing that makes the site competitive rather than merely correct, and it is the
+  "V9 build" you said you would greenlight after seeing this update.
