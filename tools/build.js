@@ -107,6 +107,7 @@ function headerNav() {
 <a class="link hidesm" href="/#categories">Categories</a>
 <a class="link hidesm" href="/#how">How it works</a>
 <a class="link hidesm" href="/#faq">FAQ</a>
+<a class="link hidesm" href="/blog/">Blog</a>
 <a class="link hidesm" href="/contact.html">Contact</a>
 <a class="btn navcta" href="/app.html">Open the Card Maker</a>
 <span class="acct" id="acct"></span>
@@ -117,6 +118,7 @@ function headerNav() {
 <a href="/#categories">Categories</a>
 <a href="/#how">How it works</a>
 <a href="/#faq">FAQ</a>
+<a href="/blog/">Blog</a>
 <a href="/contact.html">Contact</a>
 <a class="btn" href="/app.html">Open the Card Maker</a>
 </div>
@@ -133,6 +135,7 @@ function footerMega(cats) {
 <li><a href="/app.html#daily">Today's quote</a></li>
 <li><a href="/app.html#mine">Write your own quote</a></li>
 <li><a href="/app.html#favorites">Your favorites</a></li>
+<li><a href="/blog/">Blog</a></li>
 </ul></div>
 <div><h3>Why Strong Mom Quotes</h3><ul>
 <li><a href="/#free">All Free Features</a></li>

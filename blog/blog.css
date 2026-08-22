@@ -1,0 +1,87 @@
+/* Strong Mom Quotes blog. Sits on top of styles.css and adds only
+   what the blog needs: listing cards, article body, preview bar. */
+
+.blog-head{padding:38px 0 6px}
+.blog-head .crumbs{max-width:none;margin:0 0 14px;padding:0}
+.blog-head h1{margin:0 0 10px}
+.blog-head .lede{max-width:62ch;color:var(--ink-soft);font-size:1.06rem;margin:0 0 22px}
+
+.cat-nav{display:flex;flex-wrap:wrap;gap:9px;margin:0 0 8px}
+.cat-pill{display:inline-block;padding:8px 16px;border-radius:999px;border:1.5px solid var(--line);
+  background:var(--cream);color:var(--ink-soft);font-weight:800;font-size:.86rem;text-decoration:none;
+  transition:all .2s var(--ease)}
+.cat-pill:hover{border-color:var(--accent);color:var(--accent)}
+.cat-pill.is-on{background:var(--grad-accent);border-color:transparent;color:#fff}
+
+.blog-list{display:grid;gap:22px;padding-top:26px;padding-bottom:60px;
+  grid-template-columns:repeat(auto-fill,minmax(320px,1fr))}
+.blog-list .empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:50px 0}
+
+.post-card{display:flex;flex-direction:column;background:var(--cream);border:1px solid var(--line);
+  border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);text-decoration:none;color:inherit;
+  transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
+.post-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md)}
+.post-card-img{display:block;aspect-ratio:1200/630;background:var(--grad-warm);overflow:hidden}
+.post-card-img img{width:100%;height:100%;object-fit:cover;display:block}
+.post-card-ph{display:flex;align-items:center;justify-content:center;width:100%;height:100%;
+  font-family:Fraunces,Georgia,serif;font-size:4rem;color:var(--gold-soft)}
+.post-card-body{padding:20px 22px 24px;display:flex;flex-direction:column;gap:8px;flex:1}
+.post-card-cat{margin:0;font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.post-card-title{font-family:Fraunces,Georgia,serif;font-size:1.24rem;line-height:1.28;margin:0}
+.post-card-title a{color:var(--ink);text-decoration:none}
+.post-card-title a:hover{color:var(--accent)}
+.post-card-ex{margin:0;color:var(--ink-soft);font-size:.94rem;line-height:1.6}
+.post-card-meta{margin:0;color:var(--muted);font-size:.8rem;font-weight:700}
+.post-card-meta .dot,.post-meta .dot{margin:0 7px;opacity:.5}
+.post-card-go{margin-top:auto;padding-top:6px;color:var(--accent);font-weight:800;font-size:.9rem}
+.post-card-go::after{content:" →"}
+
+/* Article */
+.post-wrap{max-width:760px;padding-top:26px;padding-bottom:20px}
+.post-wrap .crumbs{max-width:none;margin:0 0 16px;padding:0}
+.post-cat{margin:0 0 6px;font-size:.74rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+.post-cat a{color:var(--accent);text-decoration:none}
+.post h1{font-size:clamp(1.9rem,4.4vw,2.7rem);line-height:1.15;margin:0 0 12px}
+.post-meta{color:var(--muted);font-size:.86rem;font-weight:700;margin:0 0 24px}
+.post-hero{margin:0 0 30px;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-md)}
+.post-hero img{width:100%;height:auto;display:block}
+
+.post-body{font-size:1.06rem;line-height:1.75;color:var(--ink)}
+.post-body h2{font-family:Fraunces,Georgia,serif;font-size:1.6rem;line-height:1.25;margin:38px 0 12px}
+.post-body h3{font-family:Fraunces,Georgia,serif;font-size:1.22rem;margin:28px 0 8px}
+.post-body p{margin:0 0 18px}
+.post-body ul,.post-body ol{margin:0 0 20px;padding-left:24px}
+.post-body li{margin-bottom:9px}
+.post-body a{color:var(--accent);font-weight:700}
+.post-body blockquote{margin:26px 0;padding:20px 26px;border-left:4px solid var(--gold);
+  background:var(--paper-2);border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  font-family:Fraunces,Georgia,serif;font-size:1.16rem;font-style:italic;line-height:1.5;color:var(--ink)}
+.post-body blockquote p:last-child{margin:0}
+.post-body img{max-width:100%;height:auto;border-radius:var(--radius-sm);margin:12px 0}
+.post-body hr{border:0;border-top:1px solid var(--line);margin:34px 0}
+.post-body table{width:100%;border-collapse:collapse;margin:24px 0;font-size:.95rem}
+.post-body th,.post-body td{border:1px solid var(--line);padding:11px 13px;text-align:left}
+.post-body th{background:var(--paper-2);font-weight:800}
+.post-body .faq-q{font-size:1.1rem;margin-top:22px}
+
+.post-inject{margin:28px 0;padding:20px 24px;border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--paper-2)}
+
+.post-cta{margin:44px 0 10px;padding:30px;border-radius:var(--radius);background:var(--grad-warm);
+  border:1px solid var(--line);text-align:center}
+.post-cta h2{font-family:Fraunces,Georgia,serif;font-size:1.4rem;margin:0 0 10px}
+.post-cta p{color:var(--ink-soft);max-width:52ch;margin:0 auto 20px}
+
+.related{padding:16px 0 66px}
+.related h2{font-family:Fraunces,Georgia,serif;font-size:1.5rem;margin:0 0 20px}
+.post-grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+.post-grid .post-card-body{padding:16px 18px 20px}
+.post-grid .post-card-title{font-size:1.04rem}
+
+.preview-bar{position:sticky;top:0;z-index:200;background:var(--gold);color:#4a3410;
+  padding:11px 20px;text-align:center;font-weight:800;font-size:.88rem}
+
+@media(max-width:640px){
+  .blog-list{grid-template-columns:1fr;gap:18px}
+  .post-body{font-size:1.02rem}
+  .post-cta{padding:24px 20px}
+}
