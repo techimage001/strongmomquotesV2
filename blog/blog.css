@@ -85,3 +85,23 @@
   .post-body{font-size:1.02rem}
   .post-cta{padding:24px 20px}
 }
+
+/* internal link block appended when the article lacks its own */
+.post-internal{margin:34px 0 0;padding:20px 24px;border:1px solid var(--line);
+  border-radius:var(--radius-sm);background:var(--paper-2)}
+.post-internal h2{font-family:Fraunces,Georgia,serif;font-size:1.2rem;margin:0 0 10px}
+.post-internal ul{margin:0;padding-left:20px}
+.post-internal li{margin-bottom:6px}
+.post-internal a{color:var(--accent);font-weight:700}
+
+/* table of contents */
+.post-body .toc{margin:22px 0 28px;padding:18px 22px;background:var(--paper-2);
+  border:1px solid var(--line);border-radius:var(--radius-sm)}
+.post-body .toc h2{font-size:1.15rem;margin:0 0 10px}
+.post-body .toc ul{margin:0;padding-left:20px}
+.post-body .toc li{margin-bottom:5px}
+
+/* quick answer box */
+.post-body .bco-tldr{margin:20px 0 26px;padding:18px 22px;border-left:4px solid var(--gold);
+  background:var(--paper-2);border-radius:0 var(--radius-sm) var(--radius-sm) 0}
+.post-body .bco-tldr p{margin:0;font-size:1.02rem}
