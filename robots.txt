@@ -7,6 +7,19 @@ Disallow: /subscribe.php
 Disallow: /verify.php
 Disallow: /unsubscribe.php
 
+# Icons must be crawlable by the image crawler or Google shows a blank globe
+User-agent: Googlebot-Image
+Allow: /favicon.ico
+Allow: /favicon.svg
+Allow: /favicon-48.png
+Allow: /favicon-96.png
+Allow: /favicon-144.png
+Allow: /icon-192.png
+Allow: /apple-touch-icon.png
+Allow: /og/
+Allow: /uploads/blog/
+Allow: /
+
 # AI answer and search crawlers - allowed so pages stay eligible for AI citations
 User-agent: OAI-SearchBot
 Allow: /
